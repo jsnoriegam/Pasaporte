@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Work VPN (Fortinet)",
+    "host": "vpn.example.com:10443",
+    "username": "usuario",
+    "protocol": "fortinet",
+    "servercert": "pin-sha256:REEMPLAZAR_CON_TU_PIN=="
+  },
+  {
+    "name": "Cliente GlobalProtect (SAML)",
+    "host": "vpn.cliente.com",
+    "protocol": "gp",
+    "saml": true,
+    "gateway": false,
+    "os": "win",
+    "clientos": "Windows"
+  }
+]

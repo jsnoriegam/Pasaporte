@@ -1,0 +1,19 @@
+.venv/
+.build-venv/
+.build-cache/
+__pycache__/
+*.pyc
+*.pyo
+*.log
+*.bak
+*.egg-info/
+build/
+dist/
+AppDir/
+*.AppImage
+*.zsync
+
+# Configuración local con datos reales de servidores/usuarios
+/vpn.json
+/vpn.json.*
+!vpn.example.json

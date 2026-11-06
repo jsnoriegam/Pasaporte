@@ -1,0 +1,15 @@
+#!/bin/bash
+set -euo pipefail
+
+dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+canonical="${XDG_CONFIG_HOME:-$HOME/.config}/pasaporte/hosts.json"
+
+if [[ -n "${VPN_CONFIG:-}" ]]; then
+  exec "$dir/vpn.sh" "$@"
+elif [[ -f "$canonical" ]]; then
+  VPN_CONFIG="$canonical" exec "$dir/vpn.sh" "$@"
+elif [[ -f "$dir/vpn.json" ]]; then
+  VPN_CONFIG="$dir/vpn.json" exec "$dir/vpn.sh" "$@"
+else
+  exec "$dir/vpn.sh" "$@"
+fi

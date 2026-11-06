@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.jsnoriegam.pasaporte</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <name>Pasaporte</name>
+  <summary>Graphical openconnect client with GlobalProtect/SAML</summary>
+  <description>
+    <p>
+      Pasaporte is a Qt/PySide6 GUI for openconnect. It supports Fortinet,
+      GlobalProtect with SAML, and the other openconnect protocols.
+    </p>
+    <p>
+      Connections are stored in a JSON file, with migration to
+      ~/.config/pasaporte/hosts.json. The interface is available in English
+      and Spanish.
+    </p>
+  </description>
+  <launchable type="desktop-id">io.github.jsnoriegam.pasaporte.desktop</launchable>
+  <url type="homepage">https://github.com/jsnoriegam/pasaporte</url>
+  <developer id="io.github.jsnoriegam">
+    <name>jsnoriegam</name>
+  </developer>
+  <categories>
+    <category>Network</category>
+  </categories>
+  <releases>
+    <release version="0.2.0" date="2026-11-06"/>
+  </releases>
+  <content_rating type="oars-1.1"/>
+</component>

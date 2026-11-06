@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Pasaporte
+Comment=Interfaz gráfica para openconnect (Fortinet, GlobalProtect/SAML)
+Exec=/ruta/a/pasaporte/pasaporte
+Icon=network-vpn
+Terminal=false
+Categories=Network;RemoteAccess;
+StartupNotify=true
+StartupWMClass=pasaporte

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Pasaporte
+Comment=Graphical interface for openconnect (Fortinet, GlobalProtect/SAML)
+Exec=pasaporte
+Icon=io.github.jsnoriegam.pasaporte
+Terminal=false
+Categories=Network;RemoteAccess;
+StartupNotify=true
+StartupWMClass=io.github.jsnoriegam.pasaporte
