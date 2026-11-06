@@ -483,3 +483,9 @@ El flujo SAML se validó con un ACS simulado que devuelve las cabeceras
 `vpn3.utb.edu.co` (redirección a Microsoft Entra ID). Contra un servidor
 GlobalProtect real puede requerir ajustar `gateway`, `clientos`, `os` o
 `usergroup`.
+
+## Apoya el proyecto
+
+Si Pasaporte te resulta útil, puedes invitarme un café:
+
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-jsnoriegam-FFDD00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/jsnoriegam)

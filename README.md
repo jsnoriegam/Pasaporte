@@ -481,3 +481,9 @@ The SAML flow was validated with a simulated ACS that returns the
 `prelogin-cookie` and `saml-username` headers, and against the real prelogin of
 `vpn3.utb.edu.co` (redirect to Microsoft Entra ID). Against a real GlobalProtect
 server it may require adjusting `gateway`, `clientos`, `os` or `usergroup`.
+
+## Support
+
+If Pasaporte is useful to you, you can buy me a coffee:
+
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-jsnoriegam-FFDD00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/jsnoriegam)
