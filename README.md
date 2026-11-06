@@ -2,6 +2,8 @@
 
 **English** · [Español](./README.es.md)
 
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-jsnoriegam-FFDD00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/jsnoriegam)
+
 A **Python + PySide6/Qt** graphical interface for `openconnect`, meant to
 replace the `vpn.sh` menu and add **GlobalProtect with SAML** support inside
 the application itself (embedded WebView).
