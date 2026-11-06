@@ -1,24 +1,26 @@
 # Pasaporte
 
-Interfaz gráfica en **Python + PySide6/Qt** para `openconnect`, pensada para
-reemplazar el menú de `vpn.sh` y añadir soporte de **GlobalProtect con SAML**
-dentro de la propia aplicación (WebView embebido).
+**English** · [Español](./README.es.md)
 
-La misma lista JSON de conexiones sirve para Fortinet, GlobalProtect y el
-resto de protocolos de openconnect.
+A **Python + PySide6/Qt** graphical interface for `openconnect`, meant to
+replace the `vpn.sh` menu and add **GlobalProtect with SAML** support inside
+the application itself (embedded WebView).
 
-![Captura de Pasaporte](./screenshot.png)
+The same JSON connection list works for Fortinet, GlobalProtect and the rest
+of the openconnect protocols.
 
-## Requisitos
+![Pasaporte screenshot](./screenshot-en.png)
 
-- Linux con escritorio (X11 o Wayland).
-- Python 3.10 o superior.
-- `openconnect` instalado y en el `PATH` (o define `OPENCONNECT_BIN` con su ruta).
-- `pkexec` (recomendado) o `sudo`.
-- PySide6 con los módulos `QtWebEngineWidgets` y `QtWebSockets`.
-  El paquete `PySide6` de PyPI los incluye.
+## Requirements
 
-Comprobaciones rápidas:
+- Linux with a desktop environment (X11 or Wayland).
+- Python 3.10 or newer.
+- `openconnect` installed and on `PATH` (or set `OPENCONNECT_BIN` to its path).
+- `pkexec` (recommended) or `sudo`.
+- PySide6 with the `QtWebEngineWidgets` and `QtWebSockets` modules.
+  The `PySide6` package from PyPI includes them.
+
+Quick checks:
 
 ```bash
 openconnect --version
@@ -26,66 +28,67 @@ which pkexec
 .venv/bin/python -c "import PySide6; from PySide6 import QtWebEngineWidgets, QtWebSockets; print(PySide6.__version__)"
 ```
 
-## Instalación
+## Installation
 
-Todo se instala dentro del proyecto, en `.venv/`; no hace falta tocar los
-paquetes globales del sistema:
+Everything is installed inside the project, in `.venv/`; there is no need to
+touch the system-wide packages:
 
 ```bash
-cd /ruta/a/pasaporte
+cd /path/to/pasaporte
 
 python3 -m venv .venv
 .venv/bin/pip install -r requirements.txt
 ```
 
-Si ya existe `.venv`, basta con instalar/actualizar las dependencias:
+If `.venv` already exists, just install/update the dependencies:
 
 ```bash
 .venv/bin/pip install -r requirements.txt
 ```
 
-## Ejecución
+## Running
 
 ```bash
-# configuración por defecto: ~/.config/pasaporte/hosts.json
+# default configuration: ~/.config/pasaporte/hosts.json
 ./pasaporte
 
-# o indicando otro archivo
+# or point to another file
 ./pasaporte --config ~/.config/vpn/hosts.json
 
-# alias temporal de la versión anterior
+# temporary alias for the previous version
 ./vpn-gui
 
-# con el venv activado
+# with the venv activated
 PYTHONPATH=src python3 -m pasaporte --config ./vpn.json
 
-# conectar automáticamente al arrancar (por nombre de conexión)
+# connect automatically on startup (by connection name)
 ./pasaporte --config vpn.json --connect UTB
 ```
 
-`./pasaporte` detecta y usa automáticamente el `.venv` del proyecto si existe,
-aunque no lo tengas activado. Así no depende de los paquetes globales del
-sistema.
+`./pasaporte` automatically detects and uses the project `.venv` if it exists,
+even when it is not activated. That way it does not depend on the system-wide
+packages.
 
-En el primer arranque, si no existe `~/.config/pasaporte/hosts.json` y hay una
-configuración en `~/.config/vpn/hosts.json` o en `vpn.json`, Pasaporte te
-ofrecerá **Importar** o **Usar solo esta sesión**. En modo solo-lectura puedes
-migrar más tarde con el botón **Migrar configuración**.
+On first launch, if `~/.config/pasaporte/hosts.json` does not exist and there
+is a configuration in `~/.config/vpn/hosts.json` or in `vpn.json`, Pasaporte
+will offer **Import** or **Use this session only**. In read-only mode you can
+migrate later with the **Migrate configuration** button.
 
-También se puede usar la variable `VPN_CONFIG`:
+The `VPN_CONFIG` variable can also be used:
 
 ```bash
 VPN_CONFIG=./vpn.json ./pasaporte
 ```
 
-> Importante: usa `./pasaporte` o `PYTHONPATH=src python3 -m pasaporte`. Si
-> importas y creas la `QApplication` por tu cuenta, hay que configurar el
-> puerto de DevTools antes de inicializar QtWebEngine. El lanzador ya lo hace.
+> Important: use `./pasaporte` or `PYTHONPATH=src python3 -m pasaporte`. If you
+> import the package and create the `QApplication` yourself, you must configure
+> the DevTools port before initializing QtWebEngine. The launcher already does
+> this.
 
-### Acceso desde el menú de aplicaciones
+### Launching from the application menu
 
-El proyecto incluye `pasaporte.desktop` y `vpn-gui.desktop` (alias). Para
-instalarlos:
+The project includes `pasaporte.desktop` and `vpn-gui.desktop` (alias). To
+install them:
 
 ```bash
 mkdir -p ~/.local/share/applications
@@ -93,173 +96,171 @@ cp pasaporte.desktop vpn-gui.desktop ~/.local/share/applications/
 update-desktop-database ~/.local/share/applications 2>/dev/null || true
 ```
 
-Ajusta la línea `Exec=` si mueves el proyecto de sitio.
+Adjust the `Exec=` line if you move the project elsewhere.
 
 ## AppImage
 
-El AppImage incluye Python, PySide6 y QtWebEngine. **No incluye openconnect**:
-usa el del sistema o el que indiques con `OPENCONNECT_BIN`.
+The AppImage bundles Python, PySide6 and QtWebEngine. It **does not include
+openconnect**: it uses the system one or the one you point to with
+`OPENCONNECT_BIN`.
 
-### Construir
+### Building
 
-Con Podman (recomendado):
+With Podman (recommended):
 
 ```bash
 ./packaging/build-in-podman.sh
 ```
 
-Con Docker:
+With Docker:
 
 ```bash
 CONTAINER_ENGINE=docker ./packaging/build-in-podman.sh
 ```
 
-El resultado queda en:
+The result is written to:
 
 ```
 dist/Pasaporte-0.2.0-x86_64.AppImage
 ```
 
-La build usa Ubuntu 22.04 dentro del contenedor para mantener compatibilidad
-con glibc. La primera vez descarga PySide6 dentro del contenedor.
+The build uses Ubuntu 22.04 inside the container to keep glibc compatibility.
+The first run downloads PySide6 inside the container.
 
-### Ejecutar
+### Running
 
 ```bash
 chmod +x dist/Pasaporte-*.AppImage
 ./dist/Pasaporte-*.AppImage
 ```
 
-Requiere en el host:
+It requires the following on the host:
 
-- `openconnect` (o `OPENCONNECT_BIN=/ruta/a/openconnect`)
-- `pkexec` (o `sudo` sin contraseña con `VPN_GUI_PRIVILEGE=sudo`)
-- `vpnc-script` (lo usa openconnect)
+- `openconnect` (or `OPENCONNECT_BIN=/path/to/openconnect`)
+- `pkexec` (or passwordless `sudo` with `VPN_GUI_PRIVILEGE=sudo`)
+- `vpnc-script` (used by openconnect)
 
-Ejemplo con una ruta explícita:
+Example with an explicit path:
 
 ```bash
 OPENCONNECT_BIN=/opt/openconnect/bin/openconnect ./Pasaporte-*.AppImage
 ```
 
-### Notas del AppImage
+### AppImage notes
 
-- **Sandbox de QtWebEngine:** el `AppRun` define
-  `QTWEBENGINE_DISABLE_SANDBOX=1` porque un AppImage no puede llevar el helper
-  setuid de Chromium. Es una concesión de seguridad; el WebView solo se usa
-  para el login SAML.
-- **SAML verificado:** el AppImage se probó contra UTB y el WebView cargó el
-  login de Microsoft dentro del paquete.
-- **Tamaño:** ~195 MB (QtWebEngine es la mayor parte).
-- **i18n:** incluye las traducciones de Pasaporte y `qtbase_es.qm`.
-- **Openconnect no se empaqueta:** se busca en `PATH` y, si no aparece, la app
-  sugiere `OPENCONNECT_BIN`.
-- **Dependencias del host:** además de `openconnect`, `pkexec` y `vpnc-script`,
-  QtWebEngine usa librerías del sistema como `libnss3`, `libnspr4` y `libgbm1`,
-  presentes en cualquier escritorio moderno.
-- **Compatibilidad:** se construye en Ubuntu 22.04, así que requiere
-  glibc >= 2.35 (Ubuntu 22.04+, Fedora 35+, Debian 12+).
-- **Wayland/X11:** incluye los plugins de Qt; conviene probar ambos.
-- **CI:** `.github/workflows/appimage.yml` construye el AppImage con Docker y
-  lo publica en un release cuando se empuja un tag `v*`.
+- **QtWebEngine sandbox:** `AppRun` sets `QTWEBENGINE_DISABLE_SANDBOX=1`
+  because an AppImage cannot ship Chromium's setuid helper. This is a security
+  trade-off; the WebView is only used for the SAML login.
+- **SAML verified:** the AppImage was tested against UTB and the WebView loaded
+  the Microsoft login inside the bundle.
+- **Size:** ~195 MB (QtWebEngine accounts for most of it).
+- **i18n:** includes the Pasaporte translations and `qtbase_es.qm`.
+- **Openconnect is not bundled:** it is looked up on `PATH` and, if missing,
+  the app suggests `OPENCONNECT_BIN`.
+- **Host dependencies:** besides `openconnect`, `pkexec` and `vpnc-script`,
+  QtWebEngine uses system libraries such as `libnss3`, `libnspr4` and
+  `libgbm1`, which are present on any modern desktop.
+- **Compatibility:** built on Ubuntu 22.04, so it requires glibc >= 2.35
+  (Ubuntu 22.04+, Fedora 35+, Debian 12+).
+- **Wayland/X11:** both Qt plugins are included; testing both is recommended.
+- **CI:** `.github/workflows/appimage.yml` builds the AppImage with Docker and
+  publishes it in a release when a `v*` tag is pushed.
 
-> La metadata del AppImage (`packaging/io.github.jsnoriegam.pasaporte.appdata.xml`)
-> usa `https://github.com/jsnoriegam/pasaporte` y `GPL-3.0-or-later` como
-> marcadores. Ajusta la URL y la licencia antes de publicar. El repositorio
-> todavía no incluye un archivo `LICENSE`.
+> The AppImage metadata (`packaging/io.github.jsnoriegam.pasaporte.appdata.xml`)
+> declares `GPL-3.0-or-later`. The repository does not include a `LICENSE` file
+> yet; add one before distributing binaries.
 
-## Gestión de conexiones
+## Connection management
 
-Desde la ventana principal puedes:
+From the main window you can:
 
-- **Añadir** una conexión con el botón `Añadir` o `Ctrl+N`.
-- **Editar** la seleccionada con `Editar`, `Ctrl+E` o el menú contextual.
-- **Eliminar** la seleccionada con `Eliminar`, `Supr` o el menú contextual.
-- **Recargar** el JSON con `F5`.
+- **Add** a connection with the `Add` button or `Ctrl+N`.
+- **Edit** the selected one with `Edit`, `Ctrl+E` or the context menu.
+- **Delete** the selected one with `Delete`, `Del` or the context menu.
+- **Reload** the JSON with `F5`.
 
-El diálogo de edición tiene tres pestañas:
+The edit dialog has three tabs:
 
-- **General**: nombre, host, usuario, protocolo, `servercert` y descripción.
+- **General**: name, host, username, protocol, `servercert` and description.
 - **GlobalProtect / SAML**: `saml`, `gateway`, `--os`, `clientos`,
-  `usergroup`, User-Agent y `ignore_redirects`.
-- **Avanzado**: elevación (`pkexec`/`sudo`), `no_verify`,
-  `allow_insecure_crypto` y argumentos extra (uno por línea).
+  `usergroup`, User-Agent and `ignore_redirects`.
+- **Advanced**: elevation (`pkexec`/`sudo`), `no_verify`,
+  `allow_insecure_crypto` and extra arguments (one per line).
 
-Las escrituras son atómicas, con permisos `0600` y un backup
-`hosts.json.bak` antes de cada cambio. Si el JSON se modifica fuera de la
-app, se te pedirá confirmación antes de sobrescribirlo. Se preservan los
-campos desconocidos que añadas a mano.
+Writes are atomic, with `0600` permissions and a `hosts.json.bak` backup before
+every change. If the JSON is modified outside the app, you will be asked for
+confirmation before overwriting it. Unknown fields you add by hand are
+preserved.
 
-> Las contraseñas y cookies **no** se guardan en el JSON.
+> Passwords and cookies are **not** stored in the JSON.
 
-### `username` con SAML
+### `username` with SAML
 
-En GlobalProtect con SAML el `username` es **opcional**. El usuario real se
-toma de la cabecera `saml-username` que devuelve el ACS. El campo de usuario
-solo se usa como respaldo si el ACS no la devuelve; en ese caso la app te
-avisará y podrás añadirlo en la configuración.
+With GlobalProtect and SAML, `username` is **optional**. The real user comes
+from the `saml-username` header returned by the ACS. The username field is only
+used as a fallback when the ACS does not return it; in that case the app warns
+you and lets you add it in the configuration.
 
-## Configuración
+## Configuration
 
-El archivo es el mismo arreglo JSON de `vpn.sh`, con campos opcionales nuevos.
-Puedes partir de [`vpn.example.json`](./vpn.example.json).
+The file is the same JSON array used by `vpn.sh`, with new optional fields. You
+can start from [`vpn.example.json`](./vpn.example.json).
 
-### Ruta y migración
+### Path and migration
 
-La ruta canónica es:
+The canonical path is:
 
 ```
 ${XDG_CONFIG_HOME:-~/.config}/pasaporte/hosts.json
 ```
 
-Precedencia:
+Precedence:
 
 1. `--config`
 2. `$VPN_CONFIG`
 3. `~/.config/pasaporte/hosts.json`
-4. Fallback de solo lectura a `~/.config/vpn/hosts.json` o al `vpn.json` del
-   proyecto
+4. Read-only fallback to `~/.config/vpn/hosts.json` or the project `vpn.json`
 
-En el primer arranque, si la ruta canónica no existe y hay una legacy, la app
-pregunta si importarla. Si eliges **Seguir sin migrar**, se carga en modo solo
-lectura: verás un aviso en la parte superior y el botón **Migrar ahora** para
-copiarla cuando quieras.
+On first launch, if the canonical path does not exist and a legacy one does,
+the app asks whether to import it. If you choose **Continue without migrating**,
+it is loaded in read-only mode: you will see a banner at the top and the
+**Migrate now** button to copy it whenever you want.
 
-También puedes **Importar** o **Exportar** desde el menú `Archivo`. La
-importación permite reemplazar todo o fusionar por nombre. Todas las
-escrituras son atómicas, con backup y permisos `0600`.
+You can also **Import** or **Export** from the `File` menu. Importing allows
+replacing everything or merging by name. All writes are atomic, with backup and
+`0600` permissions.
 
-### Campos
+### Fields
 
-| Campo | Obligatorio | Descripción |
+| Field | Required | Description |
 |---|---|---|
-| `name` | no | Nombre visible. Si falta, se usa `host`. |
-| `host` | sí | Servidor, con puerto opcional (`vpn.cliente.com:443`). Sin `https://` ni path. |
-| `username` | sí / no | Obligatorio salvo en `gp` con `saml: true`. |
-| `protocol` | no | `fortinet` (por defecto), `gp`, `anyconnect`, `pulse`, `nc`, `f5`, `array`. |
-| `servercert` | no | Pin del certificado (`pin-sha256:...`, `sha256:...`, `sha1:...`). Muy recomendado. |
-| `saml` | no | `true` para GlobalProtect con SAML. Solo válido con `protocol: "gp"`. |
-| `gateway` | no | `true` para autenticar contra la interfaz *gateway* en vez de *portal*. |
-| `usergroup` | no | Fuerza el `--usergroup` de openconnect (ej. `gateway:prelogin-cookie`). |
-| `os` | no | Valor de `--os` para GlobalProtect: `win`, `linux-64`, `mac-intel`, etc. Por defecto `win` en SAML. |
-| `clientos` | no | `clientos` que se envía a `prelogin.esp`: `Windows`, `Linux`, `Mac`. Por defecto `Windows`. |
-| `useragent` | no | User-Agent para `prelogin.esp` y `--useragent` de openconnect. Por defecto `PAN GlobalProtect`. |
-| `browser_useragent` | no | User-Agent del WebView del SAML. Normalmente no hace falta. |
-| `ignore_redirects` | no | Si es `true`, conecta al `host` original aunque el ACS esté en otro host. |
-| `no_verify` | no | **Inseguro.** Ignora errores TLS en `prelogin.esp` y en el WebView. |
-| `allow_insecure_crypto` | no | Añade `--allow-insecure-crypto` a openconnect. |
-| `privilege` | no | `pkexec` o `sudo` para esta conexión. |
-| `extra_args` | no | Lista de argumentos extra para openconnect. |
-| `description` | no | Texto libre que se muestra bajo el nombre. |
+| `name` | no | Display name. If missing, `host` is used. |
+| `host` | yes | Server, with optional port (`vpn.client.com:443`). No `https://` and no path. |
+| `username` | yes / no | Required except for `gp` with `saml: true`. |
+| `protocol` | no | `fortinet` (default), `gp`, `anyconnect`, `pulse`, `nc`, `f5`, `array`. |
+| `servercert` | no | Certificate pin (`pin-sha256:...`, `sha256:...`, `sha1:...`). Strongly recommended. |
+| `saml` | no | `true` for GlobalProtect with SAML. Only valid with `protocol: "gp"`. |
+| `gateway` | no | `true` to authenticate against the *gateway* interface instead of the *portal*. |
+| `usergroup` | no | Forces openconnect's `--usergroup` (e.g. `gateway:prelogin-cookie`). |
+| `os` | no | `--os` value for GlobalProtect: `win`, `linux-64`, `mac-intel`, etc. Defaults to `win` with SAML. |
+| `clientos` | no | `clientos` sent to `prelogin.esp`: `Windows`, `Linux`, `Mac`. Defaults to `Windows`. |
+| `useragent` | no | User-Agent for `prelogin.esp` and openconnect's `--useragent`. Defaults to `PAN GlobalProtect`. |
+| `browser_useragent` | no | User-Agent for the SAML WebView. Usually not needed. |
+| `ignore_redirects` | no | If `true`, connects to the original `host` even when the ACS is on another host. |
+| `no_verify` | no | **Insecure.** Ignores TLS errors in `prelogin.esp` and in the WebView. |
+| `allow_insecure_crypto` | no | Adds `--allow-insecure-crypto` to openconnect. |
+| `privilege` | no | `pkexec` or `sudo` for this connection. |
+| `extra_args` | no | List of extra arguments for openconnect. |
+| `description` | no | Free text shown below the name. |
 
-> `--os` y `clientos` no son lo mismo: `clientos` se envía al portal en el
-> prelogin SAML; `--os` se pasa a openconnect para el túnel. En el editor
-> puedes activar **«Sincronizar --os con clientos»** para mapear
-> Windows→win, Linux→linux-64 y Mac→mac-intel. Si un portal solo ofrece SAML
-> con `clientos=Windows`, puedes dejar `clientos=Windows` y usar
-> `--os=linux-64` desactivando la sincronización.
+> `--os` and `clientos` are not the same thing: `clientos` is sent to the
+> portal in the SAML prelogin; `--os` is passed to openconnect for the tunnel.
+> In the editor you can enable **"Sync --os with clientos"** to map
+> Windows→win, Linux→linux-64 and Mac→mac-intel. If a portal only offers SAML
+> with `clientos=Windows`, you can keep `clientos=Windows` and use
+> `--os=linux-64` by disabling the sync.
 
-### Ejemplo Fortinet
+### Fortinet example
 
 ```json
 {
@@ -271,7 +272,7 @@ escrituras son atómicas, con backup y permisos `0600`.
 }
 ```
 
-### Ejemplo GlobalProtect con SAML
+### GlobalProtect with SAML example
 
 ```json
 {
@@ -285,167 +286,165 @@ escrituras son atómicas, con backup y permisos `0600`.
 }
 ```
 
-`username` puede omitirse: se usará el que devuelva el ACS.
+`username` can be omitted: the one returned by the ACS will be used.
 
-Si el portal redirige al gateway y la conexión falla, prueba `"gateway": true`.
-También puedes forzar el valor exacto con:
+If the portal redirects to the gateway and the connection fails, try
+`"gateway": true`. You can also force the exact value with:
 
 ```json
 "usergroup": "gateway:prelogin-cookie"
 ```
 
-## Cómo funciona el SAML
+## How SAML works
 
-1. La app hace un `POST` a `global-protect/prelogin.esp` (portal) o
-   `ssl-vpn/prelogin.esp` (gateway) y obtiene la petición SAML.
-2. Esa petición se carga en un `QWebEngineView` embebido.
-3. El usuario completa el SSO (Okta, Azure AD, etc.).
-4. El ACS de GlobalProtect responde con cabeceras
-   `saml-username`, `saml-auth-status` y `prelogin-cookie` /
-   `portal-userauthcookie`.
-5. QtWebEngine no expone las cabeceras de respuesta, así que la app usa el
-   protocolo **DevTools (CDP)** en un puerto local aleatorio para leerlas.
-6. La cookie se pasa a `openconnect` por **stdin**, nunca por `argv`:
+1. The app sends a `POST` to `global-protect/prelogin.esp` (portal) or
+   `ssl-vpn/prelogin.esp` (gateway) and obtains the SAML request.
+2. That request is loaded in an embedded `QWebEngineView`.
+3. The user completes SSO (Okta, Azure AD, etc.).
+4. The GlobalProtect ACS responds with the
+   `saml-username`, `saml-auth-status` and `prelogin-cookie` /
+   `portal-userauthcookie` headers.
+5. QtWebEngine does not expose response headers, so the app uses the
+   **DevTools (CDP)** protocol on a random local port to read them.
+6. The cookie is passed to `openconnect` over **stdin**, never through `argv`:
 
 ```bash
 echo "$COOKIE" | openconnect --protocol=gp \
   --user=... --os=win \
   --usergroup=gateway:prelogin-cookie \
-  --passwd-on-stdin vpn.cliente.com
+  --passwd-on-stdin vpn.client.com
 ```
 
-## Privilegios
+## Privileges
 
-`openconnect` necesita root para crear la interfaz `tun`, pero la GUI no se
-ejecuta como root.
+`openconnect` needs root to create the `tun` interface, but the GUI does not run
+as root.
 
-- Por defecto se usa `pkexec`: aparece el diálogo de Polkit del escritorio.
-  `pkexec` conserva stdin, que es lo que necesitamos para la contraseña/cookie.
-- Si prefieres `sudo`, la app ejecuta `sudo -n openconnect ...` y necesita
-  sudoers sin contraseña. Ejemplo (ajusta el usuario/grupo y la ruta):
+- By default `pkexec` is used: the desktop Polkit dialog appears. `pkexec`
+  preserves stdin, which is what we need for the password/cookie.
+- If you prefer `sudo`, the app runs `sudo -n openconnect ...` and needs
+  passwordless sudoers. Example (adjust the user/group and path):
 
 ```sudoers
 %wheel ALL=(root) NOPASSWD: /usr/bin/openconnect
 ```
 
-> Esa regla permite ejecutar openconnect con argumentos arbitrarios. Si te
-> preocupa, crea un wrapper con argumentos fijos y autoriza solo ese wrapper.
+> That rule allows running openconnect with arbitrary arguments. If that worries
+> you, create a wrapper with fixed arguments and authorize only that wrapper.
 
-Para forzar el modo:
+To force the mode:
 
 ```bash
 VPN_GUI_PRIVILEGE=pkexec ./pasaporte
 VPN_GUI_PRIVILEGE=sudo   ./pasaporte
 ```
 
-## Seguridad
+## Security
 
-- La contraseña y la cookie SAML se escriben en el stdin del proceso; no se
-  guardan en disco ni aparecen en `ps`.
-- El JSON se escribe con permisos `0600` y backup `hosts.json.bak`.
-- El perfil del WebView es efímero: no persiste cookies del IdP.
-- El puerto de DevTools es aleatorio y escucha solo en `127.0.0.1`.
-- `no_verify` desactiva la validación TLS durante el login. Úsalo solo de
-  forma temporal.
-- Configura `servercert` siempre que puedas.
+- The password and the SAML cookie are written to the process stdin; they are
+  not stored on disk and do not appear in `ps`.
+- The JSON is written with `0600` permissions and a `hosts.json.bak` backup.
+- The WebView profile is ephemeral: it does not persist IdP cookies.
+- The DevTools port is random and listens only on `127.0.0.1`.
+- `no_verify` disables TLS validation during login. Use it only temporarily.
+- Configure `servercert` whenever possible.
 
-## Solución de problemas
+## Troubleshooting
 
-**`CERTIFICATE_VERIFY_FAILED` en `prelogin.esp`**
-La app usa el almacén de CAs del sistema. Si el servidor usa una CA
-corporativa que no está instalada, añádela al almacén del sistema o usa
-`"no_verify": true` de forma temporal para el login. Para la conexión final,
-openconnect seguirá validando el certificado: configura `servercert` o
-`--cafile` en `extra_args`.
+**`CERTIFICATE_VERIFY_FAILED` in `prelogin.esp`**
+The app uses the system CA store. If the server uses a corporate CA that is not
+installed, add it to the system store or use `"no_verify": true` temporarily for
+the login. For the final connection, openconnect will still validate the
+certificate: configure `servercert` or `--cafile` in `extra_args`.
 
-**`DevTools no está disponible` / no se capturan las cabeceras**
-Arranca con `./pasaporte` o `PYTHONPATH=src python3 -m pasaporte`. No
-configures manualmente `QTWEBENGINE_REMOTE_DEBUGGING` salvo que sepas lo que
-haces.
+**`DevTools not available` / headers are not captured**
+Start with `./pasaporte` or `PYTHONPATH=src python3 -m pasaporte`. Do not set
+`QTWEBENGINE_REMOTE_DEBUGGING` manually unless you know what you are doing.
 
-**`openconnect no pudo ejecutarse` (código 126/127)**
-El diálogo de Polkit se canceló o `sudo` pidió contraseña. Revisa
-`VPN_GUI_PRIVILEGE` y la regla de sudoers.
+**`openconnect could not be executed` (code 126/127)**
+The Polkit dialog was canceled or `sudo` asked for a password. Check
+`VPN_GUI_PRIVILEGE` and the sudoers rule.
 
-**El WebView se queda en blanco o QtWebEngine no arranca**
-En contenedores o entornos sin sandbox:
+**The WebView stays blank or QtWebEngine does not start**
+In containers or environments without a sandbox:
 
 ```bash
 QTWEBENGINE_DISABLE_SANDBOX=1 ./pasaporte
 ```
 
-**El portal no anuncia SAML**
-Prueba la otra interfaz (`gateway: true/false`) y un `clientos` distinto
-(`Windows`, `Mac`, `Linux`). El error incluye la URL que se consultó.
+**The portal does not advertise SAML**
+Try the other interface (`gateway: true/false`) and a different `clientos`
+(`Windows`, `Mac`, `Linux`). The error includes the URL that was queried.
 
-**El IdP no completa el login o se queda en blanco**
-Algunos proveedores bloquean navegadores embebidos o dependen de ventanas
-emergentes. Prueba con `browser_useragent` (un User-Agent de Chrome estándar)
-y revisa el registro. El WebView actual no gestiona popups de SSO.
+**The IdP does not complete the login or stays blank**
+Some providers block embedded browsers or depend on pop-up windows. Try
+`browser_useragent` (a standard Chrome User-Agent) and check the log. The
+current WebView does not handle SSO popups.
 
-**El certificado del servidor no es válido**
-Añade `servercert` con el pin correcto. Si el portal redirige a un gateway en
-otro host, el pin debe ser el del **gateway** que aparece en el registro (o
-usa `ignore_redirects` si quieres forzar el host configurado).
+**The server certificate is not valid**
+Add `servercert` with the correct pin. If the portal redirects to a gateway on
+another host, the pin must be the one of the **gateway** shown in the log (or
+use `ignore_redirects` if you want to force the configured host).
 
-**`Resultado 512` / «Invalid authentication cookie» tras el SAML**
-El portal rechazó la cookie. Las causas habituales, en orden:
+**`Result 512` / "Invalid authentication cookie" after SAML**
+The portal rejected the cookie. The usual causes, in order:
 
-1. **Interfaz equivocada.** `gateway` debe coincidir con el sitio donde iniciaste
-   el SAML. Si `gateway: false`, el `usergroup` será `portal:prelogin-cookie`.
-   Si la conexión falla, prueba a cambiar `gateway` en el editor.
-2. **Cookie caducada.** Las cookies SAML duran poco. Si tardaste mucho en
-   completar el login o en aceptar el diálogo de pkexec, vuelve a conectar.
-3. **`usergroup` forzado.** Si pusiste un `usergroup` a mano en la conexión,
-   bórralo para que se genere automáticamente.
+1. **Wrong interface.** `gateway` must match where you started the SAML. If
+   `gateway: false`, the `usergroup` will be `portal:prelogin-cookie`. If the
+   connection fails, try changing `gateway` in the editor.
+2. **Expired cookie.** SAML cookies are short-lived. If you took too long to
+   complete the login or to accept the pkexec dialog, connect again.
+3. **Forced `usergroup`.** If you set a `usergroup` by hand on the connection,
+   remove it so it is generated automatically.
 
-**La conexión se queda en “Conectando…”**
-Mira el registro: openconnect escribe ahí el error real (credenciales,
-certificado, HIP, etc.). La app usa `--non-inter`; si el servidor exige un
-prompt interactivo adicional, habrá que añadir el dato por configuración.
+**The connection stays on "Connecting…"**
+Look at the log: openconnect writes the real error there (credentials,
+certificate, HIP, etc.). The app uses `--non-inter`; if the server requires an
+additional interactive prompt, the value will have to be added through the
+configuration.
 
-**Desconectar no cierra la VPN**
-Pasaporte cierra openconnect con `pkexec kill` (o `sudo -n kill`) sobre el
-mismo PID. Si cancelas la autorización, la VPN sigue activa y el registro lo
-indica. Para cerrar una sesión que la app ya no controla:
+**Disconnecting does not close the VPN**
+Pasaporte closes openconnect with `pkexec kill` (or `sudo -n kill`) on the same
+PID. If you cancel the authorization, the VPN stays up and the log says so. To
+close a session the app no longer controls:
 
 ```bash
 pkexec pkill -x openconnect
 ```
 
-## Relación con `vpn.sh`
+## Relationship with `vpn.sh`
 
-- `vpn.sh` usa por defecto `~/.config/pasaporte/hosts.json`.
-- `pasaporte` y `vpn.sh` comparten el mismo JSON.
-- El wrapper `./vpn` usa la configuración canónica si existe; antes de migrar,
-  cae en `./vpn.json` para no romper el flujo antiguo.
-- `vpn.json` puede quedarse como plantilla; añade `protocol`/`saml` cuando
-  quieras una conexión GlobalProtect.
+- `vpn.sh` uses `~/.config/pasaporte/hosts.json` by default.
+- `pasaporte` and `vpn.sh` share the same JSON.
+- The `./vpn` wrapper uses the canonical configuration if it exists; before
+  migrating, it falls back to `./vpn.json` so the old workflow keeps working.
+- `vpn.json` can remain as a template; add `protocol`/`saml` when you want a
+  GlobalProtect connection.
 
-## Idiomas
+## Languages
 
-Pasaporte usa **English** como idioma fuente y **Español** como traducción.
-El idioma se elige en `Archivo → Idioma`:
+Pasaporte uses **English** as the source language and **Spanish** as a
+translation. The language is chosen in `File → Language`:
 
-- **Automático (sistema):** usa el idioma del escritorio; si no hay
-  traducción, English.
+- **Automatic (system):** uses the desktop language; if there is no
+  translation, English.
 - **English**
-- **Español**
+- **Spanish**
 
-El cambio se aplica en caliente, sin reiniciar. Los diálogos nuevos salen en
-el idioma activo.
+The change is applied live, without restarting. New dialogs appear in the
+active language.
 
-![Pasaporte en inglés](./screenshot-en.png)
+![Pasaporte in Spanish](./screenshot.png)
 
-### Añadir un idioma
+### Adding a language
 
-1. Copia `src/pasaporte/translations/pasaporte_es.ts` a
-   `pasaporte_<código>.ts`.
-2. Traduce con `pyside6-linguist`.
-3. Compila con `pyside6-lrelease`.
-4. Añádelo a `LANGUAGES` en `src/pasaporte/i18n.py`.
+1. Copy `src/pasaporte/translations/pasaporte_es.ts` to
+   `pasaporte_<code>.ts`.
+2. Translate with `pyside6-linguist`.
+3. Compile with `pyside6-lrelease`.
+4. Add it to `LANGUAGES` in `src/pasaporte/i18n.py`.
 
-Para regenerar las cadenas:
+To regenerate the strings:
 
 ```bash
 pyside6-lupdate -extensions py -recursive src/pasaporte \
@@ -454,31 +453,31 @@ pyside6-lrelease src/pasaporte/translations/pasaporte_es.ts \
   -qm src/pasaporte/translations/pasaporte_es.qm
 ```
 
-## Desarrollo
+## Development
 
-El código está en `src/pasaporte/`. Para ejecutar los tests:
+The code is in `src/pasaporte/`. To run the tests:
 
 ```bash
 QT_QPA_PLATFORM=offscreen .venv/bin/python -m unittest discover -s tests -v
 ```
 
-Incluyen persistencia atómica, backups, permisos, validación, edición,
-CRUD de la ventana principal, migración a `~/.config/pasaporte`, importación
-por fusión, ciclo conectar/desconectar, SAML, `usergroup`, i18n y detección de
-openconnect (`OPENCONNECT_BIN`).
+They cover atomic persistence, backups, permissions, validation, editing,
+main-window CRUD, migration to `~/.config/pasaporte`, merge import,
+connect/disconnect cycle, SAML, `usergroup`, i18n and openconnect detection
+(`OPENCONNECT_BIN`).
 
-## Estado
+## Status
 
-Probado con:
+Tested with:
 
-- PySide6 6.11.2 (Qt 6.11) y PySide6 6.12.0 (Qt 6.12)
+- PySide6 6.11.2 (Qt 6.11) and PySide6 6.12.0 (Qt 6.12)
 - openconnect 9.21
 - Linux (Wayland/X11)
-- 50 tests automáticos (configuración, CRUD, cancelaciones, migración, SAML, ciclo conectar/desconectar, cierre de ventana, i18n y `OPENCONNECT_BIN`)
-- Empaquetado AppImage con Podman/Docker (PyInstaller + appimagetool)
+- 50 automated tests (configuration, CRUD, cancellations, migration, SAML,
+  connect/disconnect cycle, window close, i18n and `OPENCONNECT_BIN`)
+- AppImage packaging with Podman/Docker (PyInstaller + appimagetool)
 
-El flujo SAML se validó con un ACS simulado que devuelve las cabeceras
-`prelogin-cookie` y `saml-username`, y contra el prelogin real de
-`vpn3.utb.edu.co` (redirección a Microsoft Entra ID). Contra un servidor
-GlobalProtect real puede requerir ajustar `gateway`, `clientos`, `os` o
-`usergroup`.
+The SAML flow was validated with a simulated ACS that returns the
+`prelogin-cookie` and `saml-username` headers, and against the real prelogin of
+`vpn3.utb.edu.co` (redirect to Microsoft Entra ID). Against a real GlobalProtect
+server it may require adjusting `gateway`, `clientos`, `os` or `usergroup`.
