@@ -12,7 +12,7 @@ from pathlib import Path
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
 _XDG = tempfile.TemporaryDirectory()
-os.environ["XDG_CONFIG_HOME"] = str(Path(_XDG.name) / "xdg")
+os.environ.setdefault("XDG_CONFIG_HOME", str(Path(_XDG.name) / "xdg"))
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
@@ -72,6 +72,10 @@ class I18nTests(unittest.TestCase):
         )
 
     def test_main_window_retranslates(self) -> None:
+        # Parte siempre del ajuste automático para no depender de lo que
+        # hayan dejado otros tests en QSettings.
+        self.manager.set_language("auto")
+
         tmp = tempfile.TemporaryDirectory()
         config = Path(tmp.name) / "hosts.json"
         config.write_text(
