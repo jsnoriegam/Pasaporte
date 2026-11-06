@@ -45,7 +45,12 @@ from PySide6.QtCore import QTimer  # noqa: E402
 from PySide6.QtGui import QIcon  # noqa: E402
 from PySide6.QtWidgets import QApplication  # noqa: E402
 
-from .constants import APP_ID, APP_NAME, APP_SLUG  # noqa: E402
+from .constants import (  # noqa: E402
+    APP_ID,
+    APP_NAME,
+    APP_SLUG,
+    APP_VERSION,
+)
 from .paths import resolve_config_path  # noqa: E402
 from .ui import MainWindow  # noqa: E402
 
@@ -65,6 +70,11 @@ def main(argv: list[str] | None = None) -> int:
             f"{APP_NAME}: graphical interface for openconnect "
             "(Fortinet, GlobalProtect/SAML, …)"
         )
+    )
+    parser.add_argument(
+        "--version",
+        action="version",
+        version=f"%(prog)s {APP_VERSION}",
     )
     parser.add_argument(
         "-c",

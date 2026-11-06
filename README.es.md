@@ -62,6 +62,9 @@ PYTHONPATH=src python3 -m pasaporte --config ./vpn.json
 
 # conectar automáticamente al arrancar (por nombre de conexión)
 ./pasaporte --config vpn.json --connect UTB
+
+# mostrar la versión
+./pasaporte --version
 ```
 
 `./pasaporte` detecta y usa automáticamente el `.venv` del proyecto si existe,
@@ -117,7 +120,7 @@ CONTAINER_ENGINE=docker ./packaging/build-in-podman.sh
 El resultado queda en:
 
 ```
-dist/Pasaporte-0.2.0-x86_64.AppImage
+dist/Pasaporte-0.1.0-beta.1-x86_64.AppImage
 ```
 
 La build usa Ubuntu 22.04 dentro del contenedor para mantener compatibilidad
@@ -445,6 +448,20 @@ pyside6-lrelease src/pasaporte/translations/pasaporte_es.ts \
   -qm src/pasaporte/translations/pasaporte_es.qm
 ```
 
+## Versionado
+
+Pasaporte usa [SemVer](https://semver.org/). La versión vive en
+`src/pasaporte/constants.py` (`APP_VERSION`) y se refleja en la metadata de
+AppStream.
+
+- Los releases se etiquetan `v<APP_VERSION>`, por ejemplo `v0.1.0-beta.1`.
+- Un tag con `-` se publica como pre-release de GitHub.
+- El workflow de CI falla si el tag no coincide con `APP_VERSION`.
+
+```bash
+./pasaporte --version
+```
+
 ## Desarrollo
 
 El código está en `src/pasaporte/`. Para ejecutar los tests:
@@ -465,7 +482,7 @@ Probado con:
 - PySide6 6.11.2 (Qt 6.11) y PySide6 6.12.0 (Qt 6.12)
 - openconnect 9.21
 - Linux (Wayland/X11)
-- 50 tests automáticos (configuración, CRUD, cancelaciones, migración, SAML, ciclo conectar/desconectar, cierre de ventana, i18n y `OPENCONNECT_BIN`)
+- 52 tests automáticos (configuración, CRUD, cancelaciones, migración, SAML, ciclo conectar/desconectar, cierre de ventana, i18n y `OPENCONNECT_BIN`)
 - Empaquetado AppImage con Podman/Docker (PyInstaller + appimagetool)
 
 El flujo SAML se validó con un ACS simulado que devuelve las cabeceras
