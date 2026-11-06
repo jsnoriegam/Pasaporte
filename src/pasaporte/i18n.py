@@ -94,9 +94,11 @@ class LanguageManager(QObject):
     def _apply(self, setting: str, *, emit: bool) -> None:
         code = resolve_language(setting)
         self._install(code)
-        changed = code != self._current
         self._current = code
-        if emit and changed:
+        # Se emite también cuando cambia el ajuste pero no el idioma
+        # resuelto (por ejemplo, auto→en con locale inglés): así la UI
+        # puede actualizar el check del menú.
+        if emit:
             self.language_changed.emit(code)
 
     def _install(self, code: str) -> None:
