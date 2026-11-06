@@ -4,9 +4,9 @@
 
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-jsnoriegam-FFDD00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/jsnoriegam)
 
-Interfaz gráfica en **Python + PySide6/Qt** para `openconnect`, pensada para
-reemplazar el menú de `vpn.sh` y añadir soporte de **GlobalProtect con SAML**
-dentro de la propia aplicación (WebView embebido).
+Interfaz gráfica en **Python + PySide6/Qt** para `openconnect`, con soporte
+de **GlobalProtect con SAML** dentro de la propia aplicación (WebView
+embebido).
 
 La misma lista JSON de conexiones sirve para Fortinet, GlobalProtect y el
 resto de protocolos de openconnect.
@@ -57,7 +57,7 @@ Si ya existe `.venv`, basta con instalar/actualizar las dependencias:
 # o indicando otro archivo
 ./pasaporte --config ~/.config/vpn/hosts.json
 
-# alias temporal de la versión anterior
+# alias de la misma app
 ./vpn-gui
 
 # con el venv activado
@@ -204,8 +204,8 @@ avisará y podrás añadirlo en la configuración.
 
 ## Configuración
 
-El archivo es el mismo arreglo JSON de `vpn.sh`, con campos opcionales nuevos.
-Puedes partir de [`vpn.example.json`](./vpn.example.json).
+El archivo es un arreglo JSON de conexiones con campos opcionales. Puedes
+partir de [`vpn.example.json`](./vpn.example.json).
 
 ### Ruta y migración
 
@@ -415,15 +415,6 @@ indica. Para cerrar una sesión que la app ya no controla:
 ```bash
 pkexec pkill -x openconnect
 ```
-
-## Relación con `vpn.sh`
-
-- `vpn.sh` usa por defecto `~/.config/pasaporte/hosts.json`.
-- `pasaporte` y `vpn.sh` comparten el mismo JSON.
-- El wrapper `./vpn` usa la configuración canónica si existe; antes de migrar,
-  cae en `./vpn.json` para no romper el flujo antiguo.
-- `vpn.json` puede quedarse como plantilla; añade `protocol`/`saml` cuando
-  quieras una conexión GlobalProtect.
 
 ## Idiomas
 
