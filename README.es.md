@@ -57,9 +57,6 @@ Si ya existe `.venv`, basta con instalar/actualizar las dependencias:
 # o indicando otro archivo
 ./pasaporte --config ~/.config/vpn/hosts.json
 
-# alias de la misma app
-./vpn-gui
-
 # con el venv activado
 PYTHONPATH=src python3 -m pasaporte --config ./vpn.json
 
@@ -88,12 +85,11 @@ VPN_CONFIG=./vpn.json ./pasaporte
 
 ### Acceso desde el menú de aplicaciones
 
-El proyecto incluye `pasaporte.desktop` y `vpn-gui.desktop` (alias). Para
-instalarlos:
+El proyecto incluye `pasaporte.desktop`. Para instalarlo:
 
 ```bash
 mkdir -p ~/.local/share/applications
-cp pasaporte.desktop vpn-gui.desktop ~/.local/share/applications/
+cp pasaporte.desktop ~/.local/share/applications/
 update-desktop-database ~/.local/share/applications 2>/dev/null || true
 ```
 

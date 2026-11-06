@@ -210,14 +210,7 @@ class MainWindow(QMainWindow):
         self.reload_config()
 
     def _make_settings(self) -> QSettings:
-        settings = QSettings(APP_SLUG, APP_SLUG)
-        # Migrar una sola vez la geometría de la versión antigua.
-        if not settings.contains("geometry"):
-            old = QSettings("vpn-gui", "vpn-gui")
-            geometry = old.value("geometry")
-            if geometry:
-                settings.setValue("geometry", geometry)
-        return settings
+        return QSettings(APP_SLUG, APP_SLUG)
 
     # ------------------------------------------------------------------ UI
 
