@@ -161,7 +161,8 @@ OPENCONNECT_BIN=/opt/openconnect/bin/openconnect ./Pasaporte-*.AppImage
 - **Compatibility:** built on Ubuntu 22.04, so it requires glibc >= 2.35
   (Ubuntu 22.04+, Fedora 35+, Debian 12+).
 - **Wayland/X11:** both Qt plugins are included; testing both is recommended.
-- **CI:** `.github/workflows/appimage.yml` builds the AppImage with Docker and
+- **CI:** `.github/workflows/appimage.yml` runs the tests, builds the AppImage
+  with Docker on every push to `main` (downloadable as an artifact) and
   publishes it in a release when a `v*` tag is pushed.
 
 > The AppImage metadata (`packaging/io.github.jsnoriegam.pasaporte.appdata.xml`)
