@@ -175,6 +175,16 @@ class MainWindowCrudTests(unittest.TestCase):
         )
         self.assertEqual(raw, [])
 
+    def test_display_path_uses_tilde(self) -> None:
+        home = Path.home()
+        self.assertEqual(
+            self.window._display_path(home / "x" / "y"), "~/x/y"
+        )
+        self.assertEqual(self.window._display_path(home), "~")
+        self.assertEqual(
+            self.window._display_path(Path("/etc/hosts")), "/etc/hosts"
+        )
+
     def test_connect_by_name(self) -> None:
         called = []
         self.window.connect_selected = lambda: called.append(True)

@@ -476,7 +476,7 @@ class MainWindow(QMainWindow):
 
         root.addLayout(status_row)
 
-        self.statusBar().showMessage(str(self.config_path))
+        self.statusBar().showMessage(self._display_path(self.config_path))
 
         self._build_menu()
         self._build_tray()
@@ -1182,9 +1182,19 @@ class MainWindow(QMainWindow):
     def current_index(self) -> int:
         return self.list.currentRow()
 
+    def _display_path(self, path: Path) -> str:
+        """Ruta para mostrar: la carpeta personal como ~."""
+        text = str(path)
+        home = str(Path.home())
+        if text == home:
+            return "~"
+        if text.startswith(home + "/"):
+            return "~/" + text[len(home) + 1:]
+        return text
+
     def _config_status_text(self) -> str:
         suffix = self.tr(" (read-only)") if self._read_only else ""
-        return f"{self.config_path}{suffix}"
+        return f"{self._display_path(self.config_path)}{suffix}"
 
     def open_config(self) -> None:
         target = self.config_path
@@ -1909,7 +1919,7 @@ class MainWindow(QMainWindow):
                     "<code>{path}</code>. Migrate to "
                     "<code>~/.config/pasaporte/hosts.json</code> to add, "
                     "edit or delete connections."
-                ).format(path=html.escape(str(self.config_path)))
+                ).format(path=html.escape(self._display_path(self.config_path)))
             )
             read_only_tip = self.tr(
                 "Read-only configuration. Press “Migrate now” to move it "
