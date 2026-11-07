@@ -18,6 +18,25 @@
   </description>
   <launchable type="desktop-id">io.github.jsnoriegam.pasaporte.desktop</launchable>
   <url type="homepage">https://github.com/jsnoriegam/Pasaporte</url>
+  <url type="bugtracker">https://github.com/jsnoriegam/Pasaporte/issues</url>
+  <url type="vcs-browser">https://github.com/jsnoriegam/Pasaporte</url>
+  <keywords>
+    <keyword>VPN</keyword>
+    <keyword>openconnect</keyword>
+    <keyword>Fortinet</keyword>
+    <keyword>GlobalProtect</keyword>
+    <keyword>SAML</keyword>
+    <keyword>AnyConnect</keyword>
+    <keyword>Pulse Secure</keyword>
+    <keyword>AppImage</keyword>
+    <keyword>Linux</keyword>
+  </keywords>
+  <screenshots>
+    <screenshot type="default">
+      <caption>Connection list and log</caption>
+      <image>https://raw.githubusercontent.com/jsnoriegam/Pasaporte/main/screenshot-en.png</image>
+    </screenshot>
+  </screenshots>
   <developer id="io.github.jsnoriegam">
     <name>jsnoriegam</name>
   </developer>

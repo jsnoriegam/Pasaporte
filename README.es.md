@@ -1,5 +1,7 @@
 # Pasaporte
 
+**Interfaz gráfica de OpenConnect para Linux — Fortinet, GlobalProtect/SAML, AnyConnect y más.**
+
 [English](./README.md) · **Español**
 
 [![CI](https://github.com/jsnoriegam/Pasaporte/actions/workflows/appimage.yml/badge.svg)](https://github.com/jsnoriegam/Pasaporte/actions/workflows/appimage.yml)
@@ -12,8 +14,10 @@ Interfaz gráfica en **Python + PySide6/Qt** para `openconnect`, con soporte
 de **GlobalProtect con SAML** dentro de la propia aplicación (WebView
 embebido).
 
-La misma lista JSON de conexiones sirve para Fortinet, GlobalProtect y el
-resto de protocolos de openconnect.
+Es un cliente VPN de escritorio para Linux para Fortinet, Palo Alto
+GlobalProtect (incluido inicio de sesión único SAML), Cisco AnyConnect,
+Pulse Secure, F5 y Juniper, todo a través de openconnect. La misma lista
+JSON de conexiones sirve para todos los protocolos.
 
 ![Captura de Pasaporte](./screenshot.png)
 
