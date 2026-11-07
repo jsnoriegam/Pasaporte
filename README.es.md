@@ -185,8 +185,8 @@ OPENCONNECT_BIN=/opt/openconnect/bin/openconnect ./Pasaporte-*.AppImage
   `QTWEBENGINE_DISABLE_SANDBOX=1` porque un AppImage no puede llevar el helper
   setuid de Chromium. Es una concesión de seguridad; el WebView solo se usa
   para el login SAML.
-- **SAML verificado:** el AppImage se probó contra UTB y el WebView cargó el
-  login de Microsoft dentro del paquete.
+- **SAML verificado:** el AppImage se probó con una VPN real; el WebView
+  cargó el login SSO dentro del paquete.
 - **Tamaño:** ~195 MB (QtWebEngine es la mayor parte).
 - **i18n:** incluye las traducciones de Pasaporte y `qtbase_es.qm`.
 - **Openconnect no se empaqueta:** se busca en `PATH` y, si no aparece, la app
