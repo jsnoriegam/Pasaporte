@@ -101,8 +101,9 @@ GNOME no muestra iconos de bandeja por defecto. Instala la extensión
 *AppIndicator and KStatusNotifierItem Support* para tenerla; sin bandeja, la
 opción aparece desactivada y cerrar la ventana cierra la aplicación.
 
-El icono de la bandeja muestra el estado de la conexión, y su tooltip el
-texto de estado. Aparecen notificaciones cuando se establece una conexión con
+La opción **Conectar** del menú de la bandeja indica la conexión seleccionada
+en la lista, y **Conectar a…** lista todas. El icono de la bandeja muestra el
+estado de la conexión, y su tooltip el texto de estado. Aparecen notificaciones cuando se establece una conexión con
 la ventana oculta, cuando una conexión se cae y cuando hay un error.
 
 ### Reconexión e inicio con la sesión
@@ -515,7 +516,7 @@ Probado con:
 - PySide6 6.11.2 (Qt 6.11) y PySide6 6.12.0 (Qt 6.12)
 - openconnect 9.21
 - Linux (Wayland/X11)
-- 91 tests automáticos (configuración, CRUD, cancelaciones, migración, SAML, ciclo conectar/desconectar, cierre de ventana, i18n y `OPENCONNECT_BIN`)
+- 98 tests automáticos (configuración, CRUD, cancelaciones, migración, SAML, ciclo conectar/desconectar, cierre de ventana, i18n y `OPENCONNECT_BIN`)
 - Empaquetado AppImage con Podman/Docker (PyInstaller + appimagetool)
 
 El flujo SAML se validó con un ACS simulado que devuelve las cabeceras

@@ -26,6 +26,8 @@ y el proyecto usa [SemVer](https://semver.org/lang/es/).
   sesiones SAML no se reconectan en segundo plano.
 - Archivo → *Iniciar con la sesión* (opcional): entrada XDG autostart que
   arranca Pasaporte oculto en la bandeja (`--start-hidden`).
+- Bandeja: *Conectar* indica la conexión seleccionada y *Conectar a…* lista
+  todas. Con la ventana oculta, los avisos llegan como notificación.
 - El runner distingue una desconexión pedida por el usuario de una caída
   (`stop_requested`).
 

@@ -627,6 +627,7 @@ class MainWindow(QMainWindow):
         self.tray_connect_action = menu.addAction(
             self.tr("Connect"), self.connect_selected
         )
+        self.tray_connect_menu = menu.addMenu(self.tr("Connect to…"))
         self.tray_disconnect_action = menu.addAction(
             self.tr("Disconnect"), self.runner.stop
         )
@@ -760,10 +761,52 @@ class MainWindow(QMainWindow):
             return
         self.tray.setIcon(self._tray_icon(state))
         self.tray.setToolTip(f"{APP_NAME} — {self.status_label.text()}")
-        self.tray_connect_action.setEnabled(state in _EDITABLE_STATES)
+        self._refresh_tray_connect(state)
         self.tray_disconnect_action.setEnabled(
             self.runner.is_running() and state != "disconnecting"
         )
+
+    def _refresh_tray_connect(self, state: str | None = None) -> None:
+        """Acción Conectar de la bandeja: muestra la conexión que usaría."""
+        if getattr(self, "tray", None) is None:
+            return
+        if state is None:
+            state = self._state
+        server = self.current_server()
+        idle = state in _EDITABLE_STATES and self._config_ok
+        if server is not None:
+            self.tray_connect_action.setText(
+                self.tr("Connect: {name}").format(name=server.display_name)
+            )
+        else:
+            self.tray_connect_action.setText(self.tr("Connect"))
+        self.tray_connect_action.setEnabled(idle and server is not None)
+        self.tray_connect_menu.setEnabled(idle and bool(self.servers))
+
+    def _rebuild_tray_connections(self) -> None:
+        if getattr(self, "tray", None) is None:
+            return
+        self.tray_connect_menu.clear()
+        for server in self.servers:
+            action = self.tray_connect_menu.addAction(server.display_name)
+            action.triggered.connect(
+                lambda _checked=False, s=server: self.connect_from_tray(s)
+            )
+        self._refresh_tray_connect()
+
+    def connect_from_tray(self, server: VPNServer) -> None:
+        for index, candidate in enumerate(self.servers):
+            if candidate is server:
+                self.list.setCurrentRow(index)
+                self.connect_selected()
+                return
+
+    def _info(self, text: str) -> None:
+        """Avisa al usuario; con la ventana oculta, por notificación."""
+        if getattr(self, "tray", None) is not None and not self.isVisible():
+            self._notify(text, always=True)
+        else:
+            QMessageBox.information(self, APP_NAME, text)
 
     def _end_reconnect_cycle(self) -> None:
         self._reconnect_timer.stop()
@@ -953,7 +996,8 @@ class MainWindow(QMainWindow):
 
         if self.tray is not None:
             self.tray_show_action.setText(self.tr("Show"))
-            self.tray_connect_action.setText(self.tr("Connect"))
+            self.tray_connect_menu.setTitle(self.tr("Connect to…"))
+            self._refresh_tray_connect()
             self.tray_disconnect_action.setText(self.tr("Disconnect"))
             self.tray_quit_action.setText(self.tr("Quit"))
 
@@ -1019,6 +1063,7 @@ class MainWindow(QMainWindow):
                 self.tr("Configuration error: {error}").format(error=exc)
             )
             self._update_empty_state()
+            self._rebuild_tray_connections()
             self.statusBar().showMessage(self._config_status_text())
             self._update_buttons(self._state)
             return
@@ -1059,6 +1104,7 @@ class MainWindow(QMainWindow):
         self.list.blockSignals(False)
 
         self._update_empty_state()
+        self._rebuild_tray_connections()
         self.statusBar().showMessage(self._config_status_text())
         self.append_log(
             self.tr(
@@ -1620,21 +1666,15 @@ class MainWindow(QMainWindow):
 
         server = self.current_server()
         if server is None:
-            QMessageBox.information(
-                self,
-                APP_NAME,
-                self.tr("Select a connection from the list."),
-            )
+            self._info(self.tr("Select a connection from the list."))
             return
 
         if self.runner.is_running():
-            QMessageBox.information(
-                self,
-                APP_NAME,
+            self._info(
                 self.tr(
                     "There is already an active connection. "
                     "Disconnect it first."
-                ),
+                )
             )
             return
 
@@ -1877,6 +1917,7 @@ class MainWindow(QMainWindow):
             and self._config_ok
             and state in _EDITABLE_STATES
         )
+        self._refresh_tray_connect(state)
 
     def update_elapsed(self) -> None:
         if self._state != "connected" or not self._elapsed.isValid():

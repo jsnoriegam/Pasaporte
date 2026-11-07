@@ -102,8 +102,9 @@ GNOME does not show tray icons by default. Install the *AppIndicator and
 KStatusNotifierItem Support* extension to get one; without a tray the option
 is disabled and closing the window quits the app.
 
-The tray icon shows the connection state, and its tooltip shows the status
-text. Notifications appear when a connection is established while the window
+The tray menu's **Connect** entry names the connection selected in the list,
+and **Connect to…** lists all of them. The tray icon shows the connection
+state, and its tooltip shows the status text. Notifications appear when a connection is established while the window
 is hidden, when a connection drops, and when an error occurs.
 
 ### Reconnection and start at login
@@ -513,7 +514,7 @@ Tested with:
 - PySide6 6.11.2 (Qt 6.11) and PySide6 6.12.0 (Qt 6.12)
 - openconnect 9.21
 - Linux (Wayland/X11)
-- 91 automated tests (configuration, CRUD, cancellations, migration, SAML,
+- 98 automated tests (configuration, CRUD, cancellations, migration, SAML,
   connect/disconnect cycle, window close, i18n and `OPENCONNECT_BIN`)
 - AppImage packaging with Podman/Docker (PyInstaller + appimagetool)
 
