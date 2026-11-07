@@ -7,6 +7,21 @@ y el proyecto usa [SemVer](https://semver.org/lang/es/).
 
 ## [Sin publicar]
 
+## [0.1.0-beta.3] - 2026-11-07
+
+### Añadido
+
+- Bandeja: *Conectar* indica la conexión seleccionada y *Conectar a…* lista
+  todas. Con la ventana oculta, los avisos llegan como notificación.
+- Una sola instancia: al ejecutar Pasaporte con otra ya abierta, la segunda
+  muestra la ventana de la primera (o conecta la conexión pedida con
+  `--connect`) y termina.
+
+### Cambiado
+
+- Los ejemplos y las capturas usan hosts y usuarios genéricos.
+- El placeholder del nombre en el editor ya no usa una conexión real.
+
 ## [0.1.0-beta.2] - 2026-11-06
 
 ### Añadido
@@ -26,11 +41,6 @@ y el proyecto usa [SemVer](https://semver.org/lang/es/).
   sesiones SAML no se reconectan en segundo plano.
 - Archivo → *Iniciar con la sesión* (opcional): entrada XDG autostart que
   arranca Pasaporte oculto en la bandeja (`--start-hidden`).
-- Bandeja: *Conectar* indica la conexión seleccionada y *Conectar a…* lista
-  todas. Con la ventana oculta, los avisos llegan como notificación.
-- Una sola instancia: al ejecutar Pasaporte con otra ya abierta, la segunda
-  muestra la ventana de la primera (o conecta la conexión pedida con
-  `--connect`) y termina.
 - El runner distingue una desconexión pedida por el usuario de una caída
   (`stop_requested`).
 
@@ -56,6 +66,7 @@ Primera beta pública.
 - CI en GitHub Actions: tests en cada push, AppImage como artifact y release
   automático al empujar un tag `v*`.
 
-[Sin publicar]: https://github.com/jsnoriegam/Pasaporte/compare/v0.1.0-beta.2...HEAD
+[Sin publicar]: https://github.com/jsnoriegam/Pasaporte/compare/v0.1.0-beta.3...HEAD
+[0.1.0-beta.3]: https://github.com/jsnoriegam/Pasaporte/compare/v0.1.0-beta.2...v0.1.0-beta.3
 [0.1.0-beta.2]: https://github.com/jsnoriegam/Pasaporte/compare/v0.1.0-beta.1...v0.1.0-beta.2
 [0.1.0-beta.1]: https://github.com/jsnoriegam/Pasaporte/releases/tag/v0.1.0-beta.1

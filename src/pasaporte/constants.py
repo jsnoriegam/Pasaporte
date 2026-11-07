@@ -8,7 +8,7 @@ from pathlib import Path
 APP_NAME = "Pasaporte"
 APP_SLUG = "pasaporte"
 APP_ID = "io.github.jsnoriegam.pasaporte"
-APP_VERSION = "0.1.0-beta.2"
+APP_VERSION = "0.1.0-beta.3"
 
 PROJECT_DIR = Path(__file__).resolve().parents[2]
 
