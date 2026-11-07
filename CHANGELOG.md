@@ -12,6 +12,8 @@ y el proyecto usa [SemVer](https://semver.org/lang/es/).
 - Licencia GPL-3.0-or-later (`LICENSE`).
 - Plantillas de issues para errores y propuestas de función.
 - Badges de CI, release y licencia en los READMEs.
+- Ayuda → *Buscar actualizaciones…*: consulta manual a GitHub. No hay
+  comprobaciones automáticas en segundo plano.
 
 ## [0.1.0-beta.1] - 2026-11-06
 

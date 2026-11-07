@@ -56,7 +56,7 @@ from .config import (
     parse_servers,
     save_raw,
 )
-from .constants import APP_NAME, APP_SLUG
+from .constants import APP_NAME, APP_SLUG, APP_VERSION
 from .editor import ConnectionDialog
 from .gp import SamlResult
 from .i18n import LanguageManager, get_language_manager
@@ -68,6 +68,7 @@ from .paths import (
     merge_connections,
     migrate_config,
 )
+from .updates import UpdateError, is_newer, latest_release, parse_version
 from .runner import OpenConnectRunner
 from .saml_dialog import SamlLoginDialog
 
@@ -150,6 +151,29 @@ class PasswordDialog(QDialog):
         return self.edit.text()
 
 
+class _UpdateCheck(QThread):
+    """Consulta GitHub fuera del hilo de la interfaz."""
+
+    done = Signal(str, str, str)  # versión, URL, error
+
+    def __init__(self, include_prereleases: bool, parent=None) -> None:
+        super().__init__(parent)
+        self._include_prereleases = include_prereleases
+
+    def run(self) -> None:
+        try:
+            info = latest_release(
+                include_prereleases=self._include_prereleases
+            )
+        except UpdateError as exc:
+            self.done.emit("", "", str(exc))
+            return
+        if info is None:
+            self.done.emit("", "", "")
+            return
+        self.done.emit(info.version, info.url, "")
+
+
 class MainWindow(QMainWindow):
     def __init__(
         self,
@@ -183,6 +207,7 @@ class MainWindow(QMainWindow):
         self.servers: list[VPNServer] = []
 
         self._worker: PreloginWorker | None = None
+        self._update_thread: _UpdateCheck | None = None
         self._pending_server: VPNServer | None = None
         self._quit_after_stop = False
         self._state = "idle"
@@ -537,6 +562,10 @@ class MainWindow(QMainWindow):
         file_menu.addAction(self.quit_action)
 
         self.help_menu = self.menuBar().addMenu(self.tr("Help"))
+        self.update_action = QAction(self.tr("Check for updates…"), self)
+        self.update_action.triggered.connect(self.check_for_updates)
+        self.help_menu.addAction(self.update_action)
+        self.help_menu.addSeparator()
         self.about_action = QAction(self.tr("About…"), self)
         self.about_action.triggered.connect(self.show_about)
         self.help_menu.addAction(self.about_action)
@@ -1587,6 +1616,55 @@ class MainWindow(QMainWindow):
 
     # --------------------------------------------------------------- varios
 
+    def check_for_updates(self) -> None:
+        if self._update_thread is not None and self._update_thread.isRunning():
+            return
+        # Una beta quiere enterarse de nuevas betas; una estable solo de
+        # nuevas estables.
+        include_pre = parse_version(APP_VERSION)[1] is not None
+        self._update_thread = _UpdateCheck(include_pre, self)
+        self._update_thread.done.connect(self._on_update_result)
+        self.update_action.setEnabled(False)
+        self.statusBar().showMessage(self.tr("Checking for updates…"), 5000)
+        self._update_thread.start()
+
+    def _on_update_result(self, version: str, url: str, error: str) -> None:
+        self.update_action.setEnabled(True)
+        if error:
+            QMessageBox.warning(
+                self,
+                APP_NAME,
+                self.tr("Could not check for updates:\n{error}").format(
+                    error=error
+                ),
+            )
+            return
+        if not version or not is_newer(version):
+            QMessageBox.information(
+                self,
+                APP_NAME,
+                self.tr(
+                    "You are using the latest version ({version})."
+                ).format(version=APP_VERSION),
+            )
+            return
+
+        box = QMessageBox(self)
+        box.setIcon(QMessageBox.Icon.Information)
+        box.setWindowTitle(APP_NAME)
+        box.setText(
+            self.tr(
+                "Version {new} is available. You have {current}."
+            ).format(new=version, current=APP_VERSION)
+        )
+        open_button = box.addButton(
+            self.tr("Open download page"), QMessageBox.ButtonRole.AcceptRole
+        )
+        box.addButton(self.tr("Later"), QMessageBox.ButtonRole.RejectRole)
+        box.exec()
+        if box.clickedButton() is open_button:
+            QDesktopServices.openUrl(QUrl(url))
+
     def show_about(self) -> None:
         QMessageBox.about(
             self,
@@ -1639,6 +1717,9 @@ class MainWindow(QMainWindow):
         self.settings.setValue("geometry", self.saveGeometry())
 
     def closeEvent(self, event) -> None:
+        if self._update_thread is not None and self._update_thread.isRunning():
+            # Timeout corto de la petición HTTP: esperar es casi inmediato.
+            self._update_thread.wait(11000)
         if self._worker is not None and self._worker.isRunning():
             QMessageBox.information(
                 self,
