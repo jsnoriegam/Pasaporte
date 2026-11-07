@@ -7,8 +7,8 @@
     "servercert": "pin-sha256:REEMPLAZAR_CON_TU_PIN="
   },
   {
-    "name": "Cliente GlobalProtect (SAML)",
-    "host": "vpn.cliente.com",
+    "name": "VPN GlobalProtect (SAML)",
+    "host": "gp.example.com",
     "protocol": "gp",
     "saml": true,
     "gateway": false,

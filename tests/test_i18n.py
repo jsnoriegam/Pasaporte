@@ -83,7 +83,7 @@ class I18nTests(unittest.TestCase):
             json.dumps(
                 [
                     {
-                        "name": "UTB",
+                        "name": "Work VPN",
                         "host": "vpn.example.com",
                         "username": "u",
                         "protocol": "gp",

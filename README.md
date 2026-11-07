@@ -65,7 +65,7 @@ If `.venv` already exists, just install/update the dependencies:
 PYTHONPATH=src python3 -m pasaporte --config ./vpn.json
 
 # connect automatically on startup (by connection name)
-./pasaporte --config vpn.json --connect UTB
+./pasaporte --config vpn.json --connect "Work VPN"
 
 # print the version
 ./pasaporte --version
@@ -310,8 +310,8 @@ replacing everything or merging by name. All writes are atomic, with backup and
 
 ```json
 {
-  "name": "UTB",
-  "host": "vpn3.utb.edu.co",
+  "name": "Work VPN",
+  "host": "gp.example.com",
   "protocol": "gp",
   "saml": true,
   "gateway": false,
@@ -519,9 +519,10 @@ Tested with:
 - AppImage packaging with Podman/Docker (PyInstaller + appimagetool)
 
 The SAML flow was validated with a simulated ACS that returns the
-`prelogin-cookie` and `saml-username` headers, and against the real prelogin of
-`vpn3.utb.edu.co` (redirect to Microsoft Entra ID). Against a real GlobalProtect
-server it may require adjusting `gateway`, `clientos`, `os` or `usergroup`.
+`prelogin-cookie` and `saml-username` headers, and against the prelogin of a
+real corporate GlobalProtect portal (redirect to its identity provider).
+Against other GlobalProtect servers it may require adjusting `gateway`,
+`clientos`, `os` or `usergroup`.
 
 ## License
 

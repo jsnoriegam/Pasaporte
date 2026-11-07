@@ -27,8 +27,8 @@ class EditorTests(unittest.TestCase):
 
     def test_new_saml_without_username(self) -> None:
         dialog = ConnectionDialog()
-        dialog.name_edit.setText("UTB")
-        dialog.host_edit.setText("vpn3.utb.edu.co")
+        dialog.name_edit.setText("Work VPN")
+        dialog.host_edit.setText("gp.example.com")
         dialog.username_edit.setText("")
         dialog._set_protocol("gp")
         dialog.saml_check.setChecked(True)
@@ -84,8 +84,8 @@ class EditorTests(unittest.TestCase):
 
     def test_sync_os_from_clientos(self) -> None:
         dialog = ConnectionDialog()
-        dialog.name_edit.setText("UTB")
-        dialog.host_edit.setText("vpn3.utb.edu.co")
+        dialog.name_edit.setText("Work VPN")
+        dialog.host_edit.setText("gp.example.com")
         dialog._set_protocol("gp")
         dialog.saml_check.setChecked(True)
         dialog._update_saml_state()
@@ -121,8 +121,8 @@ class EditorTests(unittest.TestCase):
 
     def test_sync_preserves_mismatch(self) -> None:
         server = VPNServer(
-            name="UTB",
-            host="vpn3.utb.edu.co",
+            name="Work VPN",
+            host="gp.example.com",
             username="",
             protocol="gp",
             saml=True,
@@ -145,8 +145,8 @@ class EditorTests(unittest.TestCase):
 
     def test_sync_consistent_existing(self) -> None:
         server = VPNServer(
-            name="UTB",
-            host="vpn3.utb.edu.co",
+            name="Work VPN",
+            host="gp.example.com",
             username="",
             protocol="gp",
             saml=True,

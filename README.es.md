@@ -65,7 +65,7 @@ Si ya existe `.venv`, basta con instalar/actualizar las dependencias:
 PYTHONPATH=src python3 -m pasaporte --config ./vpn.json
 
 # conectar automáticamente al arrancar (por nombre de conexión)
-./pasaporte --config vpn.json --connect UTB
+./pasaporte --config vpn.json --connect "Work VPN"
 
 # mostrar la versión
 ./pasaporte --version
@@ -269,7 +269,7 @@ escrituras son atómicas, con backup y permisos `0600`.
 | Campo | Obligatorio | Descripción |
 |---|---|---|
 | `name` | no | Nombre visible. Si falta, se usa `host`. |
-| `host` | sí | Servidor, con puerto opcional (`vpn.cliente.com:443`). Sin `https://` ni path. |
+| `host` | sí | Servidor, con puerto opcional (`gp.example.com:443`). Sin `https://` ni path. |
 | `username` | sí / no | Obligatorio salvo en `gp` con `saml: true`. |
 | `protocol` | no | `fortinet` (por defecto), `gp`, `anyconnect`, `pulse`, `nc`, `f5`, `array`. |
 | `servercert` | no | Pin del certificado (`pin-sha256:...`, `sha256:...`, `sha1:...`). Muy recomendado. |
@@ -310,8 +310,8 @@ escrituras son atómicas, con backup y permisos `0600`.
 
 ```json
 {
-  "name": "UTB",
-  "host": "vpn3.utb.edu.co",
+  "name": "Work VPN",
+  "host": "gp.example.com",
   "protocol": "gp",
   "saml": true,
   "gateway": false,
@@ -346,7 +346,7 @@ También puedes forzar el valor exacto con:
 echo "$COOKIE" | openconnect --protocol=gp \
   --user=... --os=win \
   --usergroup=gateway:prelogin-cookie \
-  --passwd-on-stdin vpn.cliente.com
+  --passwd-on-stdin gp.example.com
 ```
 
 ## Privilegios
@@ -520,10 +520,10 @@ Probado con:
 - Empaquetado AppImage con Podman/Docker (PyInstaller + appimagetool)
 
 El flujo SAML se validó con un ACS simulado que devuelve las cabeceras
-`prelogin-cookie` y `saml-username`, y contra el prelogin real de
-`vpn3.utb.edu.co` (redirección a Microsoft Entra ID). Contra un servidor
-GlobalProtect real puede requerir ajustar `gateway`, `clientos`, `os` o
-`usergroup`.
+`prelogin-cookie` y `saml-username`, y contra el prelogin de un portal
+GlobalProtect corporativo real (redirección a su proveedor de identidad).
+Contra otros servidores GlobalProtect puede requerir ajustar `gateway`,
+`clientos`, `os` o `usergroup`.
 
 ## Licencia
 

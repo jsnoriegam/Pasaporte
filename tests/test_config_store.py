@@ -38,8 +38,8 @@ class ConfigStoreTests(unittest.TestCase):
     def test_add_saml_without_username(self) -> None:
         store = ConfigStore(self.path)
         server = VPNServer(
-            name="UTB",
-            host="vpn3.utb.edu.co",
+            name="Work VPN",
+            host="gp.example.com",
             username="",
             protocol="gp",
             saml=True,
@@ -49,7 +49,7 @@ class ConfigStoreTests(unittest.TestCase):
         store.save()
 
         raw = json.loads(self.path.read_text(encoding="utf-8"))
-        self.assertEqual(raw[0]["name"], "UTB")
+        self.assertEqual(raw[0]["name"], "Work VPN")
         self.assertNotIn("username", raw[0])
         self.assertTrue(raw[0]["saml"])
 
@@ -95,8 +95,8 @@ class ConfigStoreTests(unittest.TestCase):
             json.dumps(
                 [
                     {
-                        "name": "UTB",
-                        "host": "vpn3.utb.edu.co",
+                        "name": "Work VPN",
+                        "host": "gp.example.com",
                         "protocol": "gp",
                         "saml": True,
                         "custom_field": "keep-me",
@@ -108,20 +108,20 @@ class ConfigStoreTests(unittest.TestCase):
 
         store = ConfigStore(self.path)
         server = store.servers[0]
-        server.name = "UTB editada"
+        server.name = "Work VPN editada"
         store.update(0, server)
         store.save()
 
         raw = json.loads(self.path.read_text(encoding="utf-8"))
         self.assertEqual(raw[0]["custom_field"], "keep-me")
-        self.assertEqual(raw[0]["name"], "UTB editada")
+        self.assertEqual(raw[0]["name"], "Work VPN editada")
 
     def test_conflict_detection(self) -> None:
         store = ConfigStore(self.path)
         store.add(
             VPNServer(
-                name="UTB",
-                host="vpn3.utb.edu.co",
+                name="Work VPN",
+                host="gp.example.com",
                 username="",
                 protocol="gp",
                 saml=True,

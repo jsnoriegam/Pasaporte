@@ -85,8 +85,8 @@ class MainWindowCrudTests(unittest.TestCase):
             json.dumps(
                 [
                     {
-                        "name": "UTB",
-                        "host": "vpn3.utb.edu.co",
+                        "name": "Work VPN",
+                        "host": "gp.example.com",
                         "protocol": "gp",
                         "saml": True,
                     },
@@ -136,23 +136,23 @@ class MainWindowCrudTests(unittest.TestCase):
         )
 
         FakeDialog.server_to_return = VPNServer(
-            name="UTB editada",
-            host="vpn3.utb.edu.co",
-            username="respaldo@utb.edu.co",
+            name="Work VPN editada",
+            host="gp.example.com",
+            username="respaldo@example.com",
             protocol="gp",
             saml=True,
         )
         self.window.list.setCurrentRow(0)
         self.window.edit_server()
         self.app.processEvents()
-        self.assertEqual(self.window.servers[0].name, "UTB editada")
+        self.assertEqual(self.window.servers[0].name, "Work VPN editada")
 
         raw = json.loads(
             self.config_path.read_text(encoding="utf-8")
         )
-        self.assertEqual(raw[0]["name"], "UTB editada")
+        self.assertEqual(raw[0]["name"], "Work VPN editada")
         self.assertEqual(
-            raw[0]["username"], "respaldo@utb.edu.co"
+            raw[0]["username"], "respaldo@example.com"
         )
 
         self.window.list.setCurrentRow(0)
@@ -179,8 +179,8 @@ class MainWindowCrudTests(unittest.TestCase):
         called = []
         self.window.connect_selected = lambda: called.append(True)
 
-        self.window.connect_by_name("UTB")
-        self.assertEqual(self.window.current_server().name, "UTB")
+        self.window.connect_by_name("Work VPN")
+        self.assertEqual(self.window.current_server().name, "Work VPN")
         self.assertEqual(called, [True])
 
         # Un nombre inexistente no debe lanzar excepción.

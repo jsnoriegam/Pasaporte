@@ -100,8 +100,8 @@ class PathsTests(unittest.TestCase):
             source,
             [
                 {
-                    "name": "UTB",
-                    "host": "vpn3.utb.edu.co",
+                    "name": "Work VPN",
+                    "host": "gp.example.com",
                     "protocol": "gp",
                     "saml": True,
                 }
@@ -117,7 +117,7 @@ class PathsTests(unittest.TestCase):
         )
 
         raw = json.loads(target.read_text(encoding="utf-8"))
-        self.assertEqual(raw[0]["name"], "UTB")
+        self.assertEqual(raw[0]["name"], "Work VPN")
 
         # Segunda migración: debe crear backup.
         migrate_config(source, target)

@@ -59,9 +59,9 @@ class SingleInstanceTests(unittest.TestCase):
         first.received.connect(self.received.append)
 
         second = SingleInstance(self.key, self.app)
-        self.assertTrue(second.forward("connect:UTB"))
+        self.assertTrue(second.forward("connect:Work VPN"))
         self.assertTrue(_wait(lambda: self.received, 3), self.received)
-        self.assertEqual(self.received, ["connect:UTB"])
+        self.assertEqual(self.received, ["connect:Work VPN"])
 
     def test_stale_socket_file_is_replaced(self) -> None:
         stale = Path(QDir.tempPath()) / self.key
