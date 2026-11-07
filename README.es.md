@@ -302,7 +302,7 @@ escrituras son atómicas, con backup y permisos `0600`.
   "host": "vpn.example.com:10443",
   "username": "usuario",
   "protocol": "fortinet",
-  "servercert": "pin-sha256:REEMPLAZAR_CON_TU_PIN=="
+  "servercert": "pin-sha256:REEMPLAZAR_CON_TU_PIN="
 }
 ```
 

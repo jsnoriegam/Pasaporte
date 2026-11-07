@@ -302,7 +302,7 @@ replacing everything or merging by name. All writes are atomic, with backup and
   "host": "vpn.example.com:10443",
   "username": "usuario",
   "protocol": "fortinet",
-  "servercert": "pin-sha256:REEMPLAZAR_CON_TU_PIN=="
+  "servercert": "pin-sha256:REEMPLAZAR_CON_TU_PIN="
 }
 ```
 

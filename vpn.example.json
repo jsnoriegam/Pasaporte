@@ -4,7 +4,7 @@
     "host": "vpn.example.com:10443",
     "username": "usuario",
     "protocol": "fortinet",
-    "servercert": "pin-sha256:REEMPLAZAR_CON_TU_PIN=="
+    "servercert": "pin-sha256:REEMPLAZAR_CON_TU_PIN="
   },
   {
     "name": "Cliente GlobalProtect (SAML)",
