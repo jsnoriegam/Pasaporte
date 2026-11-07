@@ -155,7 +155,7 @@ CONTAINER_ENGINE=docker ./packaging/build-in-podman.sh
 The result is written to:
 
 ```
-dist/Pasaporte-0.1.0-beta.1-x86_64.AppImage
+dist/Pasaporte-0.1.0-beta.2-x86_64.AppImage
 ```
 
 The build uses Ubuntu 22.04 inside the container to keep glibc compatibility.

@@ -14,7 +14,7 @@ body:
     attributes:
       label: Versión de Pasaporte
       description: Salida de `pasaporte --version` o la versión del AppImage.
-      placeholder: "0.1.0-beta.1"
+      placeholder: "0.1.0-beta.2"
     validations:
       required: true
 

@@ -7,6 +7,8 @@ y el proyecto usa [SemVer](https://semver.org/lang/es/).
 
 ## [Sin publicar]
 
+## [0.1.0-beta.2] - 2026-11-06
+
 ### Añadido
 
 - Licencia GPL-3.0-or-later (`LICENSE`).
@@ -49,5 +51,6 @@ Primera beta pública.
 - CI en GitHub Actions: tests en cada push, AppImage como artifact y release
   automático al empujar un tag `v*`.
 
-[Sin publicar]: https://github.com/jsnoriegam/Pasaporte/compare/v0.1.0-beta.1...HEAD
+[Sin publicar]: https://github.com/jsnoriegam/Pasaporte/compare/v0.1.0-beta.2...HEAD
+[0.1.0-beta.2]: https://github.com/jsnoriegam/Pasaporte/compare/v0.1.0-beta.1...v0.1.0-beta.2
 [0.1.0-beta.1]: https://github.com/jsnoriegam/Pasaporte/releases/tag/v0.1.0-beta.1
