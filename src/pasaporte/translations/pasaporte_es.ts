@@ -372,323 +372,382 @@ Save anyway?</source>
     <context>
         <name>MainWindow</name>
         <message>
-            <location filename="../ui.py" line="277" />
-            <location filename="../ui.py" line="713" />
+            <location filename="../ui.py" line="291" />
+            <location filename="../ui.py" line="901" />
             <source>Reload</source>
             <translation>Recargar</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="278" />
-            <location filename="../ui.py" line="715" />
+            <location filename="../ui.py" line="292" />
+            <location filename="../ui.py" line="903" />
             <source>Re-read the connections JSON</source>
             <translation>Volver a leer el JSON de conexiones</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="298" />
-            <location filename="../ui.py" line="717" />
+            <location filename="../ui.py" line="312" />
+            <location filename="../ui.py" line="905" />
             <source>Migrate now</source>
             <translation>Migrar ahora</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="307" />
-            <location filename="../ui.py" line="718" />
+            <location filename="../ui.py" line="321" />
+            <location filename="../ui.py" line="906" />
             <source>Connections</source>
             <translation>Conexiones</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="311" />
-            <location filename="../ui.py" line="719" />
+            <location filename="../ui.py" line="325" />
+            <location filename="../ui.py" line="907" />
             <source>Add</source>
             <translation>Añadir</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="315" />
-            <location filename="../ui.py" line="720" />
+            <location filename="../ui.py" line="329" />
+            <location filename="../ui.py" line="908" />
             <source>Edit</source>
             <translation>Editar</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="319" />
-            <location filename="../ui.py" line="721" />
-            <location filename="../ui.py" line="796" />
+            <location filename="../ui.py" line="333" />
+            <location filename="../ui.py" line="909" />
+            <location filename="../ui.py" line="986" />
             <source>Delete</source>
             <translation>Eliminar</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="323" />
-            <location filename="../ui.py" line="722" />
+            <location filename="../ui.py" line="337" />
+            <location filename="../ui.py" line="910" />
             <source>Migrate configuration</source>
             <translation>Migrar configuración</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="326" />
-            <location filename="../ui.py" line="725" />
+            <location filename="../ui.py" line="340" />
+            <location filename="../ui.py" line="913" />
             <source>Copy the legacy configuration to ~/.config/pasaporte/hosts.json and switch to editable mode</source>
             <translation>Copiar la configuración legacy a ~/.config/pasaporte/hosts.json y pasar a modo editable</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="364" />
-            <location filename="../ui.py" line="729" />
+            <location filename="../ui.py" line="378" />
+            <location filename="../ui.py" line="917" />
             <source>No connections yet</source>
             <translation>No hay conexiones todavía</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="374" />
-            <location filename="../ui.py" line="731" />
+            <location filename="../ui.py" line="388" />
+            <location filename="../ui.py" line="919" />
             <source>Press “Add” to create the first connection.</source>
             <translation>Pulsa «Añadir» para crear la primera conexión.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="385" />
-            <location filename="../ui.py" line="733" />
+            <location filename="../ui.py" line="399" />
+            <location filename="../ui.py" line="921" />
             <source>Add connection</source>
             <translation>Añadir conexión</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="404" />
-            <location filename="../ui.py" line="734" />
+            <location filename="../ui.py" line="418" />
+            <location filename="../ui.py" line="922" />
             <source>Log</source>
             <translation>Registro</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="408" />
-            <location filename="../ui.py" line="735" />
+            <location filename="../ui.py" line="422" />
+            <location filename="../ui.py" line="923" />
             <source>Clear</source>
             <translation>Limpiar</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="421" />
-            <location filename="../ui.py" line="737" />
+            <location filename="../ui.py" line="435" />
+            <location filename="../ui.py" line="925" />
             <source>openconnect output will appear here.</source>
             <translation>Aquí verás la salida de openconnect.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="433" />
-            <location filename="../ui.py" line="601" />
-            <location filename="../ui.py" line="739" />
-            <location filename="../ui.py" line="766" />
-            <location filename="../ui.py" line="787" />
+            <location filename="../ui.py" line="447" />
+            <location filename="../ui.py" line="628" />
+            <location filename="../ui.py" line="927" />
+            <location filename="../ui.py" line="956" />
+            <location filename="../ui.py" line="977" />
             <source>Connect</source>
             <translation>Conectar</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="438" />
-            <location filename="../ui.py" line="604" />
-            <location filename="../ui.py" line="740" />
-            <location filename="../ui.py" line="767" />
+            <location filename="../ui.py" line="452" />
+            <location filename="../ui.py" line="631" />
+            <location filename="../ui.py" line="928" />
+            <location filename="../ui.py" line="957" />
             <source>Disconnect</source>
             <translation>Desconectar</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="445" />
-            <location filename="../ui.py" line="741" />
+            <location filename="../ui.py" line="459" />
+            <location filename="../ui.py" line="929" />
             <source>Open configuration</source>
             <translation>Abrir configuración</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="455" />
-            <location filename="../ui.py" line="1513" />
-            <location filename="../ui.py" line="1530" />
-            <location filename="../ui.py" line="1596" />
+            <location filename="../ui.py" line="469" />
+            <location filename="../ui.py" line="1703" />
+            <location filename="../ui.py" line="1720" />
+            <location filename="../ui.py" line="1814" />
             <source>Disconnected</source>
             <translation>Sin conexión</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="473" />
-            <location filename="../ui.py" line="743" />
+            <location filename="../ui.py" line="488" />
+            <location filename="../ui.py" line="931" />
             <source>File</source>
             <translation>Archivo</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="476" />
-            <location filename="../ui.py" line="745" />
+            <location filename="../ui.py" line="491" />
+            <location filename="../ui.py" line="933" />
             <source>New connection</source>
             <translation>Nueva conexión</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="482" />
-            <location filename="../ui.py" line="746" />
+            <location filename="../ui.py" line="497" />
+            <location filename="../ui.py" line="934" />
             <source>Edit connection</source>
             <translation>Editar conexión</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="488" />
-            <location filename="../ui.py" line="747" />
-            <location filename="../ui.py" line="1391" />
+            <location filename="../ui.py" line="503" />
+            <location filename="../ui.py" line="935" />
+            <location filename="../ui.py" line="1581" />
             <source>Delete connection</source>
             <translation>Eliminar conexión</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="497" />
-            <location filename="../ui.py" line="748" />
+            <location filename="../ui.py" line="512" />
+            <location filename="../ui.py" line="936" />
             <source>Import configuration…</source>
             <translation>Importar configuración…</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="503" />
-            <location filename="../ui.py" line="749" />
+            <location filename="../ui.py" line="518" />
+            <location filename="../ui.py" line="937" />
             <source>Export configuration…</source>
             <translation>Exportar configuración…</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="509" />
-            <location filename="../ui.py" line="750" />
+            <location filename="../ui.py" line="524" />
+            <location filename="../ui.py" line="938" />
             <source>Open configuration folder</source>
             <translation>Abrir carpeta de configuración</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="517" />
-            <location filename="../ui.py" line="751" />
+            <location filename="../ui.py" line="532" />
+            <location filename="../ui.py" line="939" />
             <source>Migrate configuration…</source>
             <translation>Migrar configuración…</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="526" />
-            <location filename="../ui.py" line="752" />
+            <location filename="../ui.py" line="541" />
+            <location filename="../ui.py" line="940" />
             <source>Reload configuration</source>
             <translation>Recargar configuración</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="532" />
-            <location filename="../ui.py" line="753" />
+            <location filename="../ui.py" line="547" />
+            <location filename="../ui.py" line="941" />
             <source>Open configuration…</source>
             <translation>Abrir configuración…</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="536" />
-            <location filename="../ui.py" line="758" />
+            <location filename="../ui.py" line="551" />
+            <location filename="../ui.py" line="948" />
             <source>Language</source>
             <translation>Idioma</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="542" />
-            <location filename="../ui.py" line="761" />
+            <location filename="../ui.py" line="557" />
+            <location filename="../ui.py" line="951" />
             <source>Automatic (system)</source>
             <translation>Automático (sistema)</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="561" />
-            <location filename="../ui.py" line="755" />
+            <location filename="../ui.py" line="576" />
+            <location filename="../ui.py" line="943" />
             <source>Minimize to tray</source>
             <translation>Minimizar a la bandeja</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="569" />
-            <location filename="../ui.py" line="608" />
-            <location filename="../ui.py" line="754" />
-            <location filename="../ui.py" line="768" />
-            <location filename="../ui.py" line="1820" />
+            <location filename="../ui.py" line="582" />
+            <location filename="../ui.py" line="944" />
+            <source>Reconnect automatically</source>
+            <translation>Reconectar automáticamente</translation>
+        </message>
+        <message>
+            <location filename="../ui.py" line="588" />
+            <location filename="../ui.py" line="945" />
+            <source>Start at login</source>
+            <translation>Iniciar con la sesión</translation>
+        </message>
+        <message>
+            <location filename="../ui.py" line="596" />
+            <location filename="../ui.py" line="635" />
+            <location filename="../ui.py" line="942" />
+            <location filename="../ui.py" line="958" />
+            <location filename="../ui.py" line="2047" />
             <source>Quit</source>
             <translation>Salir</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="574" />
-            <location filename="../ui.py" line="744" />
+            <location filename="../ui.py" line="601" />
+            <location filename="../ui.py" line="932" />
             <source>Help</source>
             <translation>Ayuda</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="575" />
+            <location filename="../ui.py" line="602" />
             <source>Check for updates…</source>
             <translation>Buscar actualizaciones…</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="579" />
-            <location filename="../ui.py" line="757" />
+            <location filename="../ui.py" line="606" />
+            <location filename="../ui.py" line="947" />
             <source>About…</source>
             <translation>Acerca de…</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="598" />
-            <location filename="../ui.py" line="765" />
+            <location filename="../ui.py" line="625" />
+            <location filename="../ui.py" line="955" />
             <source>Show</source>
             <translation>Mostrar</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="633" />
+            <location filename="../ui.py" line="660" />
             <source>Keep Pasaporte in the tray when its window is closed or minimized</source>
             <translation>Mantener Pasaporte en la bandeja cuando se cierre o minimice su ventana</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="637" />
+            <location filename="../ui.py" line="664" />
             <source>No system tray is available on this desktop</source>
             <translation>Este escritorio no ofrece bandeja del sistema</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="660" />
+            <location filename="../ui.py" line="687" />
             <source>Pasaporte keeps running in the tray. Use its icon to show the window or quit.</source>
             <translation>Pasaporte sigue en la bandeja. Usa su icono para mostrar la ventana o salir.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="793" />
+            <location filename="../ui.py" line="713" />
+            <source>Could not change the login setting:
+{error}</source>
+            <translation>No se pudo cambiar la opción de inicio de sesión:
+{error}</translation>
+        </message>
+        <message>
+            <location filename="../ui.py" line="724" />
+            <source>the VPN</source>
+            <translation>la VPN</translation>
+        </message>
+        <message>
+            <location filename="../ui.py" line="784" />
+            <source>Connection lost.</source>
+            <translation>Conexión perdida.</translation>
+        </message>
+        <message>
+            <location filename="../ui.py" line="792" />
+            <source>Connection lost. Connect again to log in with SAML.</source>
+            <translation>Conexión perdida. Vuelve a conectar para iniciar sesión con SAML.</translation>
+        </message>
+        <message>
+            <location filename="../ui.py" line="803" />
+            <source>Connection lost. Reconnection stopped because authorization was cancelled.</source>
+            <translation>Conexión perdida. Se detuvo la reconexión porque se canceló la autorización.</translation>
+        </message>
+        <message>
+            <location filename="../ui.py" line="814" />
+            <source>Could not reconnect after {n} attempts.</source>
+            <translation>No se pudo reconectar tras {n} intentos.</translation>
+        </message>
+        <message>
+            <location filename="../ui.py" line="819" />
+            <source>Could not reconnect to {name}.</source>
+            <translation>No se pudo reconectar a {name}.</translation>
+        </message>
+        <message>
+            <location filename="../ui.py" line="832" />
+            <source>Connection lost. Reconnecting in {seconds} s (attempt {attempt} of {total})…</source>
+            <translation>Conexión perdida. Reconectando en {seconds} s (intento {attempt} de {total})…</translation>
+        </message>
+        <message>
+            <location filename="../ui.py" line="849" />
+            <source>Reconnecting…</source>
+            <translation>Reconectando…</translation>
+        </message>
+        <message>
+            <location filename="../ui.py" line="983" />
             <source>Edit…</source>
             <translation>Editar…</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="801" />
+            <location filename="../ui.py" line="991" />
             <source>Add connection…</source>
             <translation>Añadir conexión…</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="827" />
-            <location filename="../ui.py" line="1272" />
-            <location filename="../ui.py" line="1286" />
-            <location filename="../ui.py" line="1317" />
-            <location filename="../ui.py" line="1361" />
-            <location filename="../ui.py" line="1408" />
+            <location filename="../ui.py" line="1017" />
+            <location filename="../ui.py" line="1462" />
+            <location filename="../ui.py" line="1476" />
+            <location filename="../ui.py" line="1507" />
+            <location filename="../ui.py" line="1551" />
+            <location filename="../ui.py" line="1598" />
             <source>Configuration</source>
             <translation>Configuración</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="829" />
+            <location filename="../ui.py" line="1019" />
             <source>Configuration error: {error}</source>
             <translation>Error de configuración: {error}</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="875" />
+            <location filename="../ui.py" line="1065" />
             <source>Configuration loaded: {count} connection(s) from {path}</source>
             <translation>Configuración cargada: {count} conexión(es) desde {path}</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="940" />
+            <location filename="../ui.py" line="1130" />
             <source> (read-only)</source>
             <translation> (solo lectura)</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="954" />
-            <location filename="../ui.py" line="969" />
+            <location filename="../ui.py" line="1144" />
+            <location filename="../ui.py" line="1159" />
             <source>Could not open the folder:
 {error}</source>
             <translation>No se pudo abrir la carpeta:
 {error}</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="994" />
-            <location filename="../ui.py" line="1068" />
+            <location filename="../ui.py" line="1184" />
+            <location filename="../ui.py" line="1258" />
             <source>Migration</source>
             <translation>Migración</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="996" />
-            <location filename="../ui.py" line="1070" />
+            <location filename="../ui.py" line="1186" />
+            <location filename="../ui.py" line="1260" />
             <source>Could not migrate the configuration:
 {error}</source>
             <translation>No se pudo migrar la configuración:
 {error}</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1003" />
-            <location filename="../ui.py" line="1083" />
+            <location filename="../ui.py" line="1193" />
+            <location filename="../ui.py" line="1273" />
             <source>Configuration migrated ({count} connections): {source} → {target}</source>
             <translation>Configuración migrada ({count} conexiones): {source} → {target}</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1018" />
+            <location filename="../ui.py" line="1208" />
             <source>An existing configuration was found.</source>
             <translation>Se encontró una configuración existente.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1021" />
+            <location filename="../ui.py" line="1211" />
             <source>{source}
 
 Do you want to copy it to the new location?
@@ -705,117 +764,117 @@ If you choose “Continue without migrating”, it will be used in read-only mod
 Si eliges «Seguir sin migrar», se usará en modo solo lectura y verás un aviso para migrarla cuando quieras.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1030" />
+            <location filename="../ui.py" line="1220" />
             <source>Import</source>
             <translation>Importar</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1033" />
+            <location filename="../ui.py" line="1223" />
             <source>Continue without migrating (read-only)</source>
             <translation>Seguir sin migrar (solo lectura)</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1052" />
+            <location filename="../ui.py" line="1242" />
             <source>Using legacy configuration in read-only mode: {path}. Use “Migrate configuration” to make it editable.</source>
             <translation>Usando configuración legacy en modo solo lectura: {path}. Usa «Migrar configuración» para poder editarla.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1097" />
+            <location filename="../ui.py" line="1287" />
             <source>The active configuration is read-only. Migrate it first to import.</source>
             <translation>La configuración activa es de solo lectura. Migra primero para poder importar.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1107" />
+            <location filename="../ui.py" line="1297" />
             <source>The current configuration is invalid. Fix it before importing.</source>
             <translation>La configuración actual no es válida. Corrígela antes de importar.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1115" />
-            <location filename="../ui.py" line="1128" />
-            <location filename="../ui.py" line="1133" />
-            <location filename="../ui.py" line="1169" />
+            <location filename="../ui.py" line="1305" />
+            <location filename="../ui.py" line="1318" />
+            <location filename="../ui.py" line="1323" />
+            <location filename="../ui.py" line="1359" />
             <source>Import configuration</source>
             <translation>Importar configuración</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1117" />
-            <location filename="../ui.py" line="1188" />
+            <location filename="../ui.py" line="1307" />
+            <location filename="../ui.py" line="1378" />
             <source>JSON (*.json);;All files (*)</source>
             <translation>JSON (*.json);;Todos los archivos (*)</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1137" />
+            <location filename="../ui.py" line="1327" />
             <source>Found {count} connection(s) in {source}.</source>
             <translation>Se encontraron {count} conexiones en {source}.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1140" />
+            <location filename="../ui.py" line="1330" />
             <source>What do you want to do?</source>
             <translation>¿Qué quieres hacer?</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1142" />
+            <location filename="../ui.py" line="1332" />
             <source>Replace all</source>
             <translation>Reemplazar todo</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1145" />
+            <location filename="../ui.py" line="1335" />
             <source>Merge by name</source>
             <translation>Fusionar por nombre</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1147" />
+            <location filename="../ui.py" line="1337" />
             <source>Cancel</source>
             <translation>Cancelar</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1154" />
+            <location filename="../ui.py" line="1344" />
             <source>replaced</source>
             <translation>reemplazada</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1160" />
+            <location filename="../ui.py" line="1350" />
             <source>merged (+{added}, skipped {skipped})</source>
             <translation>fusionada (+{added}, omitidas {skipped})</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1178" />
+            <location filename="../ui.py" line="1368" />
             <source>Configuration imported from {source}: {action}.</source>
             <translation>Configuración importada desde {source}: {action}.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1186" />
-            <location filename="../ui.py" line="1201" />
+            <location filename="../ui.py" line="1376" />
+            <location filename="../ui.py" line="1391" />
             <source>Export configuration</source>
             <translation>Exportar configuración</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1206" />
+            <location filename="../ui.py" line="1396" />
             <source>Configuration exported to {path}.</source>
             <translation>Configuración exportada a {path}.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1219" />
+            <location filename="../ui.py" line="1409" />
             <source>The active configuration is read-only. Press “Migrate configuration” to move it to ~/.config/pasaporte/hosts.json.</source>
             <translation>La configuración activa es de solo lectura. Pulsa «Migrar configuración» para moverla a ~/.config/pasaporte/hosts.json.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1230" />
+            <location filename="../ui.py" line="1420" />
             <source>The configuration could not be loaded. Fix the JSON or restore the backup and press Reload.</source>
             <translation>La configuración no se pudo cargar. Corrige el JSON o restaura el backup y pulsa Recargar.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1240" />
+            <location filename="../ui.py" line="1430" />
             <source>Disconnect the VPN before modifying the configuration.</source>
             <translation>Desconecta la VPN antes de modificar la configuración.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1252" />
+            <location filename="../ui.py" line="1442" />
             <source>Configuration changed</source>
             <translation>Configuración modificada</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1254" />
+            <location filename="../ui.py" line="1444" />
             <source>{path} changed outside {app}.
 
 Overwrite it with the current changes?</source>
@@ -824,35 +883,35 @@ Overwrite it with the current changes?</source>
 ¿Sobrescribirlo con los cambios actuales?</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1273" />
-            <location filename="../ui.py" line="1287" />
+            <location filename="../ui.py" line="1463" />
+            <location filename="../ui.py" line="1477" />
             <source>Could not save:
 {error}</source>
             <translation>No se pudo guardar:
 {error}</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1325" />
+            <location filename="../ui.py" line="1515" />
             <source>Connection added: {name}</source>
             <translation>Añadida conexión: {name}</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1340" />
+            <location filename="../ui.py" line="1530" />
             <source>Select a connection to edit.</source>
             <translation>Selecciona una conexión para editarla.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1369" />
+            <location filename="../ui.py" line="1559" />
             <source>Connection edited: {name}</source>
             <translation>Editada conexión: {name}</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1384" />
+            <location filename="../ui.py" line="1574" />
             <source>Select a connection to delete.</source>
             <translation>Selecciona una conexión para eliminarla.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1393" />
+            <location filename="../ui.py" line="1583" />
             <source>Delete “{name}”?
 
 A backup will be saved to {backup}.</source>
@@ -861,145 +920,160 @@ A backup will be saved to {backup}.</source>
 Se guardará un backup en {backup}.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1416" />
+            <location filename="../ui.py" line="1606" />
             <source>Connection deleted: {name}</source>
             <translation>Eliminada conexión: {name}</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1436" />
+            <location filename="../ui.py" line="1626" />
             <source>Select a connection from the list.</source>
             <translation>Selecciona una conexión de la lista.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1445" />
+            <location filename="../ui.py" line="1635" />
             <source>There is already an active connection. Disconnect it first.</source>
             <translation>Ya hay una conexión activa. Desconéctala primero.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1460" />
+            <location filename="../ui.py" line="1650" />
             <source>Cancelled.</source>
             <translation>Cancelado.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1472" />
+            <location filename="../ui.py" line="1662" />
             <source>Connection not found: {name}</source>
             <translation>No se encontró la conexión: {name}</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1481" />
+            <location filename="../ui.py" line="1671" />
             <source>DevTools is not available, so ACS headers cannot be captured. Start the app with pasaporte or python -m pasaporte.</source>
             <translation>DevTools no está disponible, así que no se pueden capturar las cabeceras del ACS. Inicia la app con pasaporte o con python -m pasaporte.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1488" />
+            <location filename="../ui.py" line="1678" />
             <source>Getting SAML configuration…</source>
             <translation>Obteniendo configuración SAML…</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1512" />
+            <location filename="../ui.py" line="1702" />
             <source>SAML cancelled.</source>
             <translation>SAML cancelado.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1519" />
+            <location filename="../ui.py" line="1709" />
             <source>SAML OK: user={user}, field={field}, host={host}</source>
             <translation>SAML OK: usuario={user}, campo={field}, host={host}</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1533" />
+            <location filename="../ui.py" line="1723" />
             <source>SAML error: {message}</source>
             <translation>Error SAML: {message}</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1560" />
+            <location filename="../ui.py" line="1751" />
             <source>Error: {error}</source>
             <translation>Error: {error}</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1565" />
-            <location filename="../ui.py" line="1588" />
+            <location filename="../ui.py" line="1756" />
+            <location filename="../ui.py" line="1806" />
             <source>Connecting…</source>
             <translation>Conectando…</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1590" />
+            <location filename="../ui.py" line="1778" />
+            <source>Reconnected to {name}.</source>
+            <translation>Reconectado a {name}.</translation>
+        </message>
+        <message>
+            <location filename="../ui.py" line="1785" />
+            <source>Connected to {name}.</source>
+            <translation>Conectado a {name}.</translation>
+        </message>
+        <message>
+            <location filename="../ui.py" line="1790" />
+            <source>Connection error. See the log.</source>
+            <translation>Error de conexión. Revisa el registro.</translation>
+        </message>
+        <message>
+            <location filename="../ui.py" line="1808" />
             <source>Connected</source>
             <translation>Conectado</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1592" />
+            <location filename="../ui.py" line="1810" />
             <source>Disconnecting…</source>
             <translation>Desconectando…</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1594" />
+            <location filename="../ui.py" line="1812" />
             <source>Error</source>
             <translation>Error</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1640" />
+            <location filename="../ui.py" line="1858" />
             <source>&lt;b&gt;Read-only configuration.&lt;/b&gt; Using &lt;code&gt;{path}&lt;/code&gt;. Migrate to &lt;code&gt;~/.config/pasaporte/hosts.json&lt;/code&gt; to add, edit or delete connections.</source>
             <translation>&lt;b&gt;Configuración de solo lectura.&lt;/b&gt; Se está usando &lt;code&gt;{path}&lt;/code&gt;. Migra a &lt;code&gt;~/.config/pasaporte/hosts.json&lt;/code&gt; para poder añadir, editar o eliminar conexiones.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1647" />
+            <location filename="../ui.py" line="1865" />
             <source>Read-only configuration. Press “Migrate now” to move it to ~/.config/pasaporte/hosts.json.</source>
             <translation>Configuración de solo lectura. Pulsa «Migrar ahora» para moverla a ~/.config/pasaporte/hosts.json.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1679" />
+            <location filename="../ui.py" line="1897" />
             <source>openconnect exited with code {code}. Check the log.</source>
             <translation>openconnect terminó con código {code}. Revisa el registro.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1708" />
+            <location filename="../ui.py" line="1935" />
             <source>Checking for updates…</source>
             <translation>Buscando actualizaciones…</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1717" />
+            <location filename="../ui.py" line="1944" />
             <source>Could not check for updates:
 {error}</source>
             <translation>No se pudo buscar actualizaciones:
 {error}</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1727" />
+            <location filename="../ui.py" line="1954" />
             <source>You are using the latest version ({version}).</source>
             <translation>Estás usando la versión más reciente ({version}).</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1737" />
+            <location filename="../ui.py" line="1964" />
             <source>Version {new} is available. You have {current}.</source>
             <translation>Está disponible la versión {new}. Tienes la {current}.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1741" />
+            <location filename="../ui.py" line="1968" />
             <source>Open download page</source>
             <translation>Abrir página de descarga</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1743" />
+            <location filename="../ui.py" line="1970" />
             <source>Later</source>
             <translation>Más tarde</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1751" />
+            <location filename="../ui.py" line="1978" />
             <source>About {app}</source>
             <translation>Acerca de {app}</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1753" />
+            <location filename="../ui.py" line="1980" />
             <source>&lt;h3&gt;{app}&lt;/h3&gt;&lt;p&gt;Graphical interface for &lt;b&gt;openconnect&lt;/b&gt;.&lt;/p&gt;&lt;p&gt;Supports Fortinet, GlobalProtect with embedded SAML and any other openconnect protocol.&lt;/p&gt;&lt;p&gt;The password and SAML cookie are passed over stdin; never on the command line.&lt;/p&gt;</source>
             <translation>&lt;h3&gt;{app}&lt;/h3&gt;&lt;p&gt;Interfaz gráfica para &lt;b&gt;openconnect&lt;/b&gt;.&lt;/p&gt;&lt;p&gt;Soporta Fortinet, GlobalProtect con SAML embebido y cualquier otro protocolo de openconnect.&lt;/p&gt;&lt;p&gt;La contraseña y la cookie SAML se pasan por stdin; nunca por la línea de comandos.&lt;/p&gt;</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1812" />
+            <location filename="../ui.py" line="2039" />
             <source>Wait for the SAML request to finish before quitting.</source>
             <translation>Espera a que termine la consulta SAML antes de salir.</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="1821" />
+            <location filename="../ui.py" line="2048" />
             <source>A VPN is connected. Disconnect and quit?</source>
             <translation>Hay una VPN conectada. ¿Desconectar y salir?</translation>
         </message>
@@ -1044,67 +1118,67 @@ Se guardará un backup en {backup}.</translation>
     <context>
         <name>OpenConnectRunner</name>
         <message>
-            <location filename="../runner.py" line="75" />
+            <location filename="../runner.py" line="76" />
             <source>An openconnect process is already running.</source>
             <translation>Ya hay un proceso openconnect en ejecución.</translation>
         </message>
         <message>
-            <location filename="../runner.py" line="96" />
+            <location filename="../runner.py" line="99" />
             <source>Closing the openconnect session…</source>
             <translation>Cerrando la sesión de openconnect…</translation>
         </message>
         <message>
-            <location filename="../runner.py" line="140" />
+            <location filename="../runner.py" line="143" />
             <source>The openconnect process was not found; the session cannot be closed from here.</source>
             <translation>No se encontró el proceso openconnect; no se puede cerrar la sesión desde aquí.</translation>
         </message>
         <message>
-            <location filename="../runner.py" line="153" />
+            <location filename="../runner.py" line="156" />
             <source>Could not run kill -{signal} (did you cancel authorization?)</source>
             <translation>No se pudo ejecutar kill -{signal} (¿cancelaste la autorización?)</translation>
         </message>
         <message>
-            <location filename="../runner.py" line="166" />
+            <location filename="../runner.py" line="169" />
             <source>Signal {signal} sent to openconnect.</source>
             <translation>Señal {signal} enviada a openconnect.</translation>
         </message>
         <message>
-            <location filename="../runner.py" line="173" />
+            <location filename="../runner.py" line="176" />
             <source>Could not send {signal} to openconnect (code {code}). Did you cancel authorization?</source>
             <translation>No se pudo enviar {signal} a openconnect (código {code}). ¿Cancelaste la autorización?</translation>
         </message>
         <message>
-            <location filename="../runner.py" line="184" />
+            <location filename="../runner.py" line="187" />
             <source>openconnect did not exit in time; sending KILL.</source>
             <translation>openconnect no terminó a tiempo; enviando KILL.</translation>
         </message>
         <message>
-            <location filename="../runner.py" line="194" />
+            <location filename="../runner.py" line="197" />
             <source>Could not close openconnect; the VPN is still active as root. Press “Disconnect” again or close it with: pkexec pkill -x openconnect</source>
             <translation>No se pudo cerrar openconnect; la VPN sigue activa como root. Pulsa «Desconectar» de nuevo o ciérrala con: pkexec pkill -x openconnect</translation>
         </message>
         <message>
-            <location filename="../runner.py" line="206" />
+            <location filename="../runner.py" line="209" />
             <source>openconnect started; waiting for authentication…</source>
             <translation>openconnect iniciado; esperando autenticación…</translation>
         </message>
         <message>
-            <location filename="../runner.py" line="233" />
+            <location filename="../runner.py" line="236" />
             <source>Hint: the portal rejected the SAML cookie (512). Check that “gateway” matches the interface where you started SAML, or reconnect: the cookie expires quickly.</source>
             <translation>Sugerencia: el portal rechazó la cookie SAML (512). Comprueba que «gateway» coincide con la interfaz donde iniciaste el SAML, o vuelve a conectar: la cookie caduca pronto.</translation>
         </message>
         <message>
-            <location filename="../runner.py" line="256" />
+            <location filename="../runner.py" line="259" />
             <source>openconnect could not run. If using pkexec, cancel or authorize the Polkit dialog; if using sudo, configure passwordless sudoers.</source>
             <translation>openconnect no pudo ejecutarse. Si usas pkexec, cancela o autoriza el diálogo de Polkit; si usas sudo, configura sudoers sin contraseña.</translation>
         </message>
         <message>
-            <location filename="../runner.py" line="272" />
+            <location filename="../runner.py" line="275" />
             <source>Could not start the process. Is openconnect installed?</source>
             <translation>No se pudo iniciar el proceso. ¿Está instalado openconnect?</translation>
         </message>
         <message>
-            <location filename="../runner.py" line="277" />
+            <location filename="../runner.py" line="280" />
             <source>openconnect terminated abnormally.</source>
             <translation>openconnect terminó de forma anormal.</translation>
         </message>
@@ -1112,17 +1186,17 @@ Se guardará un backup en {backup}.</translation>
     <context>
         <name>PasswordDialog</name>
         <message>
-            <location filename="../ui.py" line="104" />
+            <location filename="../ui.py" line="105" />
             <source>Password · {name}</source>
             <translation>Contraseña · {name}</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="128" />
+            <location filename="../ui.py" line="129" />
             <source>VPN password</source>
             <translation>Contraseña de la VPN</translation>
         </message>
         <message>
-            <location filename="../ui.py" line="131" />
+            <location filename="../ui.py" line="132" />
             <source>Show password</source>
             <translation>Mostrar contraseña</translation>
         </message>

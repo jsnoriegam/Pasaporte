@@ -89,6 +89,11 @@ def main(argv: list[str] | None = None) -> int:
         metavar="NAME",
         help="connect to the named connection on startup",
     )
+    parser.add_argument(
+        "--start-hidden",
+        action="store_true",
+        help="start in the tray without showing the window",
+    )
     args = parser.parse_args(argv)
 
     app = QApplication([sys.argv[0]])
@@ -111,7 +116,9 @@ def main(argv: list[str] | None = None) -> int:
 
     config_target = resolve_config_path(args.config)
     window = MainWindow(config_target)
-    window.show()
+    # Sin bandeja no hay forma de volver a la ventana: en ese caso se muestra.
+    if not (args.start_hidden and window.tray is not None):
+        window.show()
     if args.connect:
         QTimer.singleShot(
             0, lambda: window.connect_by_name(args.connect)

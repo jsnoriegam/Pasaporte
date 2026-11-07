@@ -17,6 +17,15 @@ y el proyecto usa [SemVer](https://semver.org/lang/es/).
 - Archivo → *Minimizar a la bandeja*: cerrar o minimizar la ventana la deja en
   la bandeja sin desconectar la VPN. Salir se hace con *Salir* o desde el menú
   de la bandeja.
+- Icono de bandeja según el estado de la conexión, con notificaciones al
+  conectar (con la ventana oculta), al caerse la conexión y ante errores.
+- Archivo → *Reconectar automáticamente* (opcional): tras una caída reintenta
+  a los 5, 15 y 30 segundos. La contraseña solo se guarda en memoria. Las
+  sesiones SAML no se reconectan en segundo plano.
+- Archivo → *Iniciar con la sesión* (opcional): entrada XDG autostart que
+  arranca Pasaporte oculto en la bandeja (`--start-hidden`).
+- El runner distingue una desconexión pedida por el usuario de una caída
+  (`stop_requested`).
 
 ## [0.1.0-beta.1] - 2026-11-06
 

@@ -48,6 +48,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from . import autostart
 from .config import (
     ConfigConflictError,
     ConfigStore,
@@ -175,6 +176,9 @@ class _UpdateCheck(QThread):
 
 
 class MainWindow(QMainWindow):
+    # Intentos de reconexión tras una caída, con espera creciente.
+    RECONNECT_DELAYS_MS = (5000, 15000, 30000)
+
     def __init__(
         self,
         config: Path | ConfigTarget,
@@ -209,6 +213,16 @@ class MainWindow(QMainWindow):
         self._worker: PreloginWorker | None = None
         self._update_thread: _UpdateCheck | None = None
         self._quitting = False
+        # Sesión activa: la contraseña solo vive en memoria y únicamente si
+        # el usuario activó la reconexión automática.
+        self._was_connected = False
+        self._reconnect_active = False
+        self._reconnect_attempt = 0
+        self._session_server: VPNServer | None = None
+        self._session_password: str | None = None
+        self._reconnect_timer = QTimer(self)
+        self._reconnect_timer.setSingleShot(True)
+        self._reconnect_timer.timeout.connect(self._attempt_reconnect)
         self._pending_server: VPNServer | None = None
         self._quit_after_stop = False
         self._state = "idle"
@@ -467,6 +481,7 @@ class MainWindow(QMainWindow):
         self._build_menu()
         self._build_tray()
         self._refresh_tray_action()
+        self._update_tray(self._state)
         self._update_empty_state()
 
     def _build_menu(self) -> None:
@@ -563,6 +578,18 @@ class MainWindow(QMainWindow):
         self.minimize_tray_action.setChecked(self._tray_preference())
         self.minimize_tray_action.toggled.connect(self._set_tray_preference)
         file_menu.addAction(self.minimize_tray_action)
+
+        self.reconnect_action = QAction(self.tr("Reconnect automatically"), self)
+        self.reconnect_action.setCheckable(True)
+        self.reconnect_action.setChecked(self._reconnect_preference())
+        self.reconnect_action.toggled.connect(self._set_reconnect_preference)
+        file_menu.addAction(self.reconnect_action)
+
+        self.autostart_action = QAction(self.tr("Start at login"), self)
+        self.autostart_action.setCheckable(True)
+        self.autostart_action.setChecked(autostart.is_enabled())
+        self.autostart_action.toggled.connect(self._set_autostart)
+        file_menu.addAction(self.autostart_action)
 
         file_menu.addSeparator()
 
@@ -665,6 +692,167 @@ class MainWindow(QMainWindow):
             )
         self.hide()
 
+    def _reconnect_preference(self) -> bool:
+        return bool(self.settings.value("auto_reconnect", False, type=bool))
+
+    def _set_reconnect_preference(self, enabled: bool) -> None:
+        self.settings.setValue("auto_reconnect", enabled)
+        if not enabled:
+            self._end_reconnect_cycle()
+
+    def _set_autostart(self, enabled: bool) -> None:
+        try:
+            if enabled:
+                autostart.enable()
+            else:
+                autostart.disable()
+        except OSError as exc:
+            QMessageBox.warning(
+                self,
+                APP_NAME,
+                self.tr("Could not change the login setting:\n{error}").format(
+                    error=exc
+                ),
+            )
+            self.autostart_action.blockSignals(True)
+            self.autostart_action.setChecked(not enabled)
+            self.autostart_action.blockSignals(False)
+
+    def _session_name(self) -> str:
+        if self._session_server is not None:
+            return self._session_server.display_name
+        return self.tr("the VPN")
+
+    def _notify(
+        self, text: str, *, critical: bool = False, always: bool = False
+    ) -> None:
+        """Notificación de bandeja. Sin `always`, solo si la ventana no se ve."""
+        if self.tray is None:
+            return
+        if not always and self.isVisible() and not self.isMinimized():
+            return
+        icon = (
+            QSystemTrayIcon.MessageIcon.Warning
+            if critical
+            else QSystemTrayIcon.MessageIcon.Information
+        )
+        self.tray.showMessage(APP_NAME, text, icon, 5000)
+
+    def _tray_icon(self, state: str) -> QIcon:
+        candidates = {
+            "connected": ("network-vpn",),
+            "connecting": ("network-vpn-acquiring", "network-vpn"),
+            "disconnecting": ("network-vpn-acquiring", "network-vpn"),
+            "error": ("dialog-warning",),
+        }.get(state, ("network-vpn-disconnected", "network-vpn"))
+        for name in candidates:
+            if QIcon.hasThemeIcon(name):
+                return QIcon.fromTheme(name)
+        pixmap = (
+            QStyle.StandardPixmap.SP_MessageBoxWarning
+            if state == "error"
+            else QStyle.StandardPixmap.SP_ComputerIcon
+        )
+        return self.style().standardIcon(pixmap)
+
+    def _update_tray(self, state: str) -> None:
+        if self.tray is None:
+            return
+        self.tray.setIcon(self._tray_icon(state))
+        self.tray.setToolTip(f"{APP_NAME} — {self.status_label.text()}")
+        self.tray_connect_action.setEnabled(state in _EDITABLE_STATES)
+        self.tray_disconnect_action.setEnabled(
+            self.runner.is_running() and state != "disconnecting"
+        )
+
+    def _end_reconnect_cycle(self) -> None:
+        self._reconnect_timer.stop()
+        self._reconnect_active = False
+        self._reconnect_attempt = 0
+        self._session_server = None
+        self._session_password = None
+
+    def _schedule_reconnect(self, exit_code: int) -> None:
+        """Decide tras una caída si se reintenta o se avisa al usuario."""
+        server = self._session_server
+        password = self._session_password
+        delays = self.RECONNECT_DELAYS_MS
+
+        if not self._reconnect_preference() or server is None:
+            self._end_reconnect_cycle()
+            self._notify(
+                self.tr("Connection lost."), critical=True, always=True
+            )
+            return
+
+        if password is None:
+            self._end_reconnect_cycle()
+            self._notify(
+                self.tr(
+                    "Connection lost. Connect again to log in with SAML."
+                ),
+                critical=True,
+                always=True,
+            )
+            return
+
+        if exit_code in (126, 127):
+            self._end_reconnect_cycle()
+            self._notify(
+                self.tr(
+                    "Connection lost. Reconnection stopped because "
+                    "authorization was cancelled."
+                ),
+                critical=True,
+                always=True,
+            )
+            return
+
+        if self._reconnect_attempt >= len(delays):
+            self._end_reconnect_cycle()
+            self.append_log(
+                self.tr("Could not reconnect after {n} attempts.").format(
+                    n=len(delays)
+                )
+            )
+            self._notify(
+                self.tr("Could not reconnect to {name}.").format(
+                    name=self._session_name()
+                ),
+                critical=True,
+                always=True,
+            )
+            return
+
+        delay = delays[self._reconnect_attempt]
+        self._reconnect_attempt += 1
+        self._reconnect_active = True
+        self._reconnect_timer.start(delay)
+        message = self.tr(
+            "Connection lost. Reconnecting in {seconds} s "
+            "(attempt {attempt} of {total})…"
+        ).format(
+            seconds=delay // 1000,
+            attempt=self._reconnect_attempt,
+            total=len(delays),
+        )
+        self.append_log(message)
+        self._notify(message, critical=True, always=True)
+
+    def _attempt_reconnect(self) -> None:
+        if (
+            not self._reconnect_active
+            or self._session_server is None
+            or self.runner.is_running()
+        ):
+            return
+        self.append_log(self.tr("Reconnecting…"))
+        self._start_openconnect(
+            self._session_server,
+            password=self._session_password,
+            reconnecting=True,
+        )
+
     def quit_app(self) -> None:
         self._close_for_quit()
 
@@ -753,6 +941,8 @@ class MainWindow(QMainWindow):
         self.open_action.setText(self.tr("Open configuration…"))
         self.quit_action.setText(self.tr("Quit"))
         self.minimize_tray_action.setText(self.tr("Minimize to tray"))
+        self.reconnect_action.setText(self.tr("Reconnect automatically"))
+        self.autostart_action.setText(self.tr("Start at login"))
         self._refresh_tray_action()
         self.about_action.setText(self.tr("About…"))
         self.language_menu.setTitle(self.tr("Language"))
@@ -1546,6 +1736,7 @@ class MainWindow(QMainWindow):
         *,
         password: str | None = None,
         saml_result: SamlResult | None = None,
+        reconnecting: bool = False,
     ) -> None:
         try:
             prefix = privilege_prefix(server)
@@ -1563,6 +1754,12 @@ class MainWindow(QMainWindow):
             return
 
         self.status_label.setText(self.tr("Connecting…"))
+        self._was_connected = False
+        if not reconnecting:
+            self._end_reconnect_cycle()
+            self._session_server = server
+            if self._reconnect_preference():
+                self._session_password = password
         self.runner.start(prefix, args, secret)
 
     # --------------------------------------------------------------- estado
@@ -1570,6 +1767,27 @@ class MainWindow(QMainWindow):
     def on_state_changed(self, state: str) -> None:
         self._state = state
         self._update_status_text()
+        self._update_tray(state)
+
+        if state == "connected":
+            self._was_connected = True
+            if self._reconnect_active:
+                self._reconnect_active = False
+                self._reconnect_attempt = 0
+                self._notify(
+                    self.tr("Reconnected to {name}.").format(
+                        name=self._session_name()
+                    ),
+                    always=True,
+                )
+            else:
+                self._notify(
+                    self.tr("Connected to {name}.").format(
+                        name=self._session_name()
+                    )
+                )
+        elif state == "error":
+            self._notify(self.tr("Connection error. See the log."))
 
         if state == "connected":
             self._elapsed.start()
@@ -1679,6 +1897,15 @@ class MainWindow(QMainWindow):
                     "openconnect exited with code {code}. Check the log."
                 ).format(code=exit_code)
             )
+        dropped = not self.runner.stop_requested and (
+            self._was_connected or self._reconnect_active
+        )
+        self._was_connected = False
+        if dropped:
+            self._schedule_reconnect(exit_code)
+        else:
+            self._end_reconnect_cycle()
+
         if self._quit_after_stop:
             self._quit_after_stop = False
             self._close_for_quit()

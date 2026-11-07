@@ -98,6 +98,10 @@ class RunnerLifecycleTests(unittest.TestCase):
             pid = int(self.pid_file.read_text().strip() or 0)
             if pid and _alive(pid):
                 os.kill(pid, 9)
+        # El runner no tiene padre: destruirlo aquí evita que el GC lo
+        # libere durante el cierre del intérprete, con Qt ya desmontado.
+        self.runner.deleteLater()
+        self.app.processEvents()
         self.tmp.cleanup()
 
     def test_spanish_success_marks_connected(self) -> None:

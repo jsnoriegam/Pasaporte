@@ -50,6 +50,7 @@ class OpenConnectRunner(QObject):
         self._secret: str | None = None
         self._state = "idle"
         self._stopping = False
+        self.stop_requested = False
         self._stop_stage = 0
         self._hinted_512 = False
 
@@ -79,6 +80,7 @@ class OpenConnectRunner(QObject):
         self._prefix = list(prefix)
         self._secret = secret
         self._stopping = False
+        self.stop_requested = False
         self._stop_stage = 0
         self._hinted_512 = False
         self._set_state("connecting")
@@ -90,6 +92,7 @@ class OpenConnectRunner(QObject):
         if not self.is_running() or self._stopping:
             return
         self._stopping = True
+        self.stop_requested = True
         self._stop_stage = 0
         self._set_state("disconnecting")
         self.log.emit(

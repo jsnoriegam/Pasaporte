@@ -102,6 +102,24 @@ GNOME does not show tray icons by default. Install the *AppIndicator and
 KStatusNotifierItem Support* extension to get one; without a tray the option
 is disabled and closing the window quits the app.
 
+The tray icon shows the connection state, and its tooltip shows the status
+text. Notifications appear when a connection is established while the window
+is hidden, when a connection drops, and when an error occurs.
+
+### Reconnection and start at login
+
+- **File → Reconnect automatically** (off by default). If the tunnel drops
+  without you disconnecting, Pasaporte retries after 5, 15 and 30 seconds.
+  While this is on, the password you typed is kept **in memory only** until
+  you disconnect or the retries run out; it is never written to disk. SAML
+  sessions cannot be renewed in the background, so after a drop you must
+  connect again and sign in.
+- **File → Start at login** creates
+  `~/.config/autostart/io.github.jsnoriegam.pasaporte.desktop`. Pasaporte then
+  starts hidden in the tray (`--start-hidden`). With the AppImage, the entry
+  points to the AppImage's current path: turn the option off and on again if
+  you move the file.
+
 ### Launching from the application menu
 
 The project includes `pasaporte.desktop`. To install it:
@@ -358,6 +376,8 @@ VPN_GUI_PRIVILEGE=sudo   ./pasaporte
 
 - The password and the SAML cookie are written to the process stdin; they are
   not stored on disk and do not appear in `ps`.
+- With *Reconnect automatically* on, the password is kept in memory until you
+  disconnect or the retries run out. It is never written to disk.
 - The JSON is written with `0600` permissions and a `hosts.json.bak` backup.
 - The WebView profile is ephemeral: it does not persist IdP cookies.
 - The DevTools port is random and listens only on `127.0.0.1`.
@@ -493,7 +513,7 @@ Tested with:
 - PySide6 6.11.2 (Qt 6.11) and PySide6 6.12.0 (Qt 6.12)
 - openconnect 9.21
 - Linux (Wayland/X11)
-- 77 automated tests (configuration, CRUD, cancellations, migration, SAML,
+- 91 automated tests (configuration, CRUD, cancellations, migration, SAML,
   connect/disconnect cycle, window close, i18n and `OPENCONNECT_BIN`)
 - AppImage packaging with Podman/Docker (PyInstaller + appimagetool)
 

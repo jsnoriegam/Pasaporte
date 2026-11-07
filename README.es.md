@@ -101,6 +101,24 @@ GNOME no muestra iconos de bandeja por defecto. Instala la extensión
 *AppIndicator and KStatusNotifierItem Support* para tenerla; sin bandeja, la
 opción aparece desactivada y cerrar la ventana cierra la aplicación.
 
+El icono de la bandeja muestra el estado de la conexión, y su tooltip el
+texto de estado. Aparecen notificaciones cuando se establece una conexión con
+la ventana oculta, cuando una conexión se cae y cuando hay un error.
+
+### Reconexión e inicio con la sesión
+
+- **Archivo → Reconectar automáticamente** (desactivado por defecto). Si el
+  túnel se cae sin que hayas desconectado, Pasaporte reintenta a los 5, 15 y
+  30 segundos. Mientras está activo, la contraseña que escribiste se guarda
+  **solo en memoria** hasta que desconectes o se agoten los reintentos; nunca
+  se escribe en disco. Las sesiones SAML no se pueden renovar en segundo
+  plano: tras una caída hay que volver a conectar e iniciar sesión.
+- **Archivo → Iniciar con la sesión** crea
+  `~/.config/autostart/io.github.jsnoriegam.pasaporte.desktop`. Pasaporte
+  arranca entonces oculto en la bandeja (`--start-hidden`). Con el AppImage, la
+  entrada apunta a la ruta actual del AppImage: si mueves el archivo, desactiva
+  la opción y vuelve a activarla.
+
 ### Acceso desde el menú de aplicaciones
 
 El proyecto incluye `pasaporte.desktop`. Para instalarlo:
@@ -358,6 +376,8 @@ VPN_GUI_PRIVILEGE=sudo   ./pasaporte
 
 - La contraseña y la cookie SAML se escriben en el stdin del proceso; no se
   guardan en disco ni aparecen en `ps`.
+- Con *Reconectar automáticamente* activo, la contraseña se mantiene en memoria
+  hasta que desconectes o se agoten los reintentos. Nunca se escribe en disco.
 - El JSON se escribe con permisos `0600` y backup `hosts.json.bak`.
 - El perfil del WebView es efímero: no persiste cookies del IdP.
 - El puerto de DevTools es aleatorio y escucha solo en `127.0.0.1`.
@@ -495,7 +515,7 @@ Probado con:
 - PySide6 6.11.2 (Qt 6.11) y PySide6 6.12.0 (Qt 6.12)
 - openconnect 9.21
 - Linux (Wayland/X11)
-- 77 tests automáticos (configuración, CRUD, cancelaciones, migración, SAML, ciclo conectar/desconectar, cierre de ventana, i18n y `OPENCONNECT_BIN`)
+- 91 tests automáticos (configuración, CRUD, cancelaciones, migración, SAML, ciclo conectar/desconectar, cierre de ventana, i18n y `OPENCONNECT_BIN`)
 - Empaquetado AppImage con Podman/Docker (PyInstaller + appimagetool)
 
 El flujo SAML se validó con un ACS simulado que devuelve las cabeceras
