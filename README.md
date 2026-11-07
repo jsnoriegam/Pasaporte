@@ -513,7 +513,7 @@ Tested with:
 - PySide6 6.11.2 (Qt 6.11) and PySide6 6.12.0 (Qt 6.12)
 - openconnect 9.21
 - Linux (Wayland/X11)
-- 91 automated tests (configuration, CRUD, cancellations, migration, SAML,
+- 92 automated tests (configuration, CRUD, cancellations, migration, SAML,
   connect/disconnect cycle, window close, i18n and `OPENCONNECT_BIN`)
 - AppImage packaging with Podman/Docker (PyInstaller + appimagetool)
 
