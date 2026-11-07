@@ -18,6 +18,7 @@ os.environ.setdefault("XDG_CONFIG_HOME", str(Path(_XDG.name) / "xdg"))
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+import shiboken6  # noqa: E402
 from PySide6.QtWidgets import QApplication, QDialog  # noqa: E402
 
 import pasaporte.ui as ui  # noqa: E402
@@ -71,7 +72,7 @@ class CancelTests(unittest.TestCase):
 
     def tearDown(self) -> None:
         self.window.close()
-        self.window.deleteLater()
+        shiboken6.delete(self.window)
         self.app.processEvents()
         self.tmp.cleanup()
 

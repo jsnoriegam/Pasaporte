@@ -18,6 +18,7 @@ os.environ.setdefault("XDG_CONFIG_HOME", str(Path(_XDG.name) / "xdg"))
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+import shiboken6  # noqa: E402
 from PySide6.QtWidgets import QApplication, QSystemTrayIcon  # noqa: E402
 
 import pasaporte.ui as ui  # noqa: E402
@@ -38,7 +39,7 @@ class TrayTests(unittest.TestCase):
     def tearDown(self) -> None:
         window = getattr(self, "window", None)
         if window is not None:
-            window.deleteLater()
+            shiboken6.delete(window)
             self.app.processEvents()
         self.tmp.cleanup()
 

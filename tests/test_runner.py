@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import os
-import subprocess
 import stat
 import sys
 import tempfile
@@ -129,18 +128,10 @@ class RunnerLifecycleTests(unittest.TestCase):
         )
 
 
-@unittest.skipUnless(
-    os.environ.get("PASAPORTE_ISOLATED"),
-    "se ejecuta en su propio proceso desde RunnerIsolationTests",
-)
 class RunnerWithForkingPkexecTests(RunnerLifecycleTests):
     stub_text = FAKE_PKEXEC_FORK
 
 
-@unittest.skipUnless(
-    os.environ.get("PASAPORTE_ISOLATED"),
-    "se ejecuta en su propio proceso desde RunnerIsolationTests",
-)
 class RunnerWithExecingPkexecTests(RunnerLifecycleTests):
     """Como pkexec real: openconnect ocupa el PID del proceso lanzado."""
 
@@ -149,41 +140,6 @@ class RunnerWithExecingPkexecTests(RunnerLifecycleTests):
 
 del RunnerLifecycleTests
 
-
-
-class RunnerIsolationTests(unittest.TestCase):
-    """Cada variante de pkexec corre en su propio intérprete.
-
-    Ejecutadas juntas en el mismo proceso, la finalización de Python aborta
-    (double free) cuando quedan QProcess vivos; cada una por separado pasa.
-    """
-
-    def test_each_variant_in_its_own_interpreter(self) -> None:
-        env = dict(os.environ, PASAPORTE_ISOLATED="1")
-        for name in (
-            "RunnerWithForkingPkexecTests",
-            "RunnerWithExecingPkexecTests",
-        ):
-            with self.subTest(variant=name):
-                result = subprocess.run(
-                    [
-                        sys.executable,
-                        "-m",
-                        "unittest",
-                        f"tests.test_runner.{name}",
-                    ],
-                    cwd=ROOT,
-                    env=env,
-                    capture_output=True,
-                    text=True,
-                    timeout=180,
-                    check=False,
-                )
-                self.assertEqual(
-                    result.returncode,
-                    0,
-                    result.stderr[-2000:],
-                )
 
 
 if __name__ == "__main__":

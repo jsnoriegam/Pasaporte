@@ -17,6 +17,7 @@ os.environ.setdefault("XDG_CONFIG_HOME", str(Path(_XDG.name) / "xdg"))
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+import shiboken6  # noqa: E402
 from PySide6.QtCore import QCoreApplication  # noqa: E402
 from PySide6.QtWidgets import QApplication  # noqa: E402
 
@@ -114,7 +115,7 @@ class I18nTests(unittest.TestCase):
         self.assertTrue(window.language_actions["es"].isChecked())
 
         window.close()
-        window.deleteLater()
+        shiboken6.delete(window)
         self.app.processEvents()
         tmp.cleanup()
 

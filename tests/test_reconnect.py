@@ -20,6 +20,7 @@ os.environ.setdefault("XDG_CONFIG_HOME", str(Path(_XDG.name) / "xdg"))
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+import shiboken6  # noqa: E402
 from PySide6.QtCore import QCoreApplication  # noqa: E402
 from PySide6.QtWidgets import QApplication  # noqa: E402
 
@@ -78,7 +79,7 @@ class _Base(unittest.TestCase):
             window.runner.process.waitForFinished(3000)
         window.settings.setValue("auto_reconnect", False)
         window._update_thread = None
-        window.deleteLater()
+        shiboken6.delete(window)
         self.app.processEvents()
         self.tmp.cleanup()
 
