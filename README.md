@@ -91,6 +91,17 @@ VPN_CONFIG=./vpn.json ./pasaporte
 > the DevTools port before initializing QtWebEngine. The launcher already does
 > this.
 
+### System tray
+
+With a system tray, closing or minimizing the window keeps Pasaporte running
+in the tray, so the VPN stays connected. Turn this off with
+**File → Minimize to tray**. Quit with **File → Quit** (`Ctrl+Q`) or from the
+tray menu.
+
+GNOME does not show tray icons by default. Install the *AppIndicator and
+KStatusNotifierItem Support* extension to get one; without a tray the option
+is disabled and closing the window quits the app.
+
 ### Launching from the application menu
 
 The project includes `pasaporte.desktop`. To install it:
@@ -482,7 +493,7 @@ Tested with:
 - PySide6 6.11.2 (Qt 6.11) and PySide6 6.12.0 (Qt 6.12)
 - openconnect 9.21
 - Linux (Wayland/X11)
-- 68 automated tests (configuration, CRUD, cancellations, migration, SAML,
+- 77 automated tests (configuration, CRUD, cancellations, migration, SAML,
   connect/disconnect cycle, window close, i18n and `OPENCONNECT_BIN`)
 - AppImage packaging with Podman/Docker (PyInstaller + appimagetool)
 

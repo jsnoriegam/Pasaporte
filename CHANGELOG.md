@@ -14,6 +14,9 @@ y el proyecto usa [SemVer](https://semver.org/lang/es/).
 - Badges de CI, release y licencia en los READMEs.
 - Ayuda → *Buscar actualizaciones…*: consulta manual a GitHub. No hay
   comprobaciones automáticas en segundo plano.
+- Archivo → *Minimizar a la bandeja*: cerrar o minimizar la ventana la deja en
+  la bandeja sin desconectar la VPN. Salir se hace con *Salir* o desde el menú
+  de la bandeja.
 
 ## [0.1.0-beta.1] - 2026-11-06
 

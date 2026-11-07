@@ -90,6 +90,17 @@ VPN_CONFIG=./vpn.json ./pasaporte
 > importas y creas la `QApplication` por tu cuenta, hay que configurar el
 > puerto de DevTools antes de inicializar QtWebEngine. El lanzador ya lo hace.
 
+### Bandeja del sistema
+
+Si hay bandeja del sistema, cerrar o minimizar la ventana deja Pasaporte en la
+bandeja, así que la VPN sigue conectada. Para desactivarlo usa
+**Archivo → Minimizar a la bandeja**. Para salir usa **Archivo → Salir**
+(`Ctrl+Q`) o el menú de la bandeja.
+
+GNOME no muestra iconos de bandeja por defecto. Instala la extensión
+*AppIndicator and KStatusNotifierItem Support* para tenerla; sin bandeja, la
+opción aparece desactivada y cerrar la ventana cierra la aplicación.
+
 ### Acceso desde el menú de aplicaciones
 
 El proyecto incluye `pasaporte.desktop`. Para instalarlo:
@@ -484,7 +495,7 @@ Probado con:
 - PySide6 6.11.2 (Qt 6.11) y PySide6 6.12.0 (Qt 6.12)
 - openconnect 9.21
 - Linux (Wayland/X11)
-- 68 tests automáticos (configuración, CRUD, cancelaciones, migración, SAML, ciclo conectar/desconectar, cierre de ventana, i18n y `OPENCONNECT_BIN`)
+- 77 tests automáticos (configuración, CRUD, cancelaciones, migración, SAML, ciclo conectar/desconectar, cierre de ventana, i18n y `OPENCONNECT_BIN`)
 - Empaquetado AppImage con Podman/Docker (PyInstaller + appimagetool)
 
 El flujo SAML se validó con un ACS simulado que devuelve las cabeceras

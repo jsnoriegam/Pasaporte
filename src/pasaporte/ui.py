@@ -208,6 +208,7 @@ class MainWindow(QMainWindow):
 
         self._worker: PreloginWorker | None = None
         self._update_thread: _UpdateCheck | None = None
+        self._quitting = False
         self._pending_server: VPNServer | None = None
         self._quit_after_stop = False
         self._state = "idle"
@@ -465,6 +466,7 @@ class MainWindow(QMainWindow):
 
         self._build_menu()
         self._build_tray()
+        self._refresh_tray_action()
         self._update_empty_state()
 
     def _build_menu(self) -> None:
@@ -556,9 +558,17 @@ class MainWindow(QMainWindow):
 
         file_menu.addSeparator()
 
+        self.minimize_tray_action = QAction(self.tr("Minimize to tray"), self)
+        self.minimize_tray_action.setCheckable(True)
+        self.minimize_tray_action.setChecked(self._tray_preference())
+        self.minimize_tray_action.toggled.connect(self._set_tray_preference)
+        file_menu.addAction(self.minimize_tray_action)
+
+        file_menu.addSeparator()
+
         self.quit_action = QAction(self.tr("Quit"), self)
         self.quit_action.setShortcut("Ctrl+Q")
-        self.quit_action.triggered.connect(self.close)
+        self.quit_action.triggered.connect(self.quit_app)
         file_menu.addAction(self.quit_action)
 
         self.help_menu = self.menuBar().addMenu(self.tr("Help"))
@@ -595,7 +605,7 @@ class MainWindow(QMainWindow):
         )
         menu.addSeparator()
         self.tray_quit_action = menu.addAction(
-            self.tr("Quit"), self.close
+            self.tr("Quit"), self.quit_app
         )
         tray.setContextMenu(menu)
 
@@ -608,6 +618,62 @@ class MainWindow(QMainWindow):
             self.showNormal()
             self.raise_()
             self.activateWindow()
+
+    def _tray_preference(self) -> bool:
+        return bool(self.settings.value("minimize_to_tray", True, type=bool))
+
+    def _set_tray_preference(self, enabled: bool) -> None:
+        self.settings.setValue("minimize_to_tray", enabled)
+
+    def _refresh_tray_action(self) -> None:
+        available = self.tray is not None
+        self.minimize_tray_action.setEnabled(available)
+        if available:
+            tip = self.tr(
+                "Keep Pasaporte in the tray when its window is closed or "
+                "minimized"
+            )
+        else:
+            tip = self.tr("No system tray is available on this desktop")
+        self.minimize_tray_action.setToolTip(tip)
+
+    def _hides_to_tray(self) -> bool:
+        """Cerrar o minimizar oculta la ventana si el usuario lo ha elegido.
+
+        Nunca si el usuario pidió salir, si la sesión se está cerrando, o si
+        hay una salida pendiente de la VPN.
+        """
+        return (
+            self.tray is not None
+            and self.minimize_tray_action.isChecked()
+            and not self._quitting
+            and not self._quit_after_stop
+            and not QApplication.instance().isSavingSession()
+        )
+
+    def _hide_to_tray(self) -> None:
+        if not self.settings.value("tray_hint_shown", False, type=bool):
+            self.settings.setValue("tray_hint_shown", True)
+            self.tray.showMessage(
+                APP_NAME,
+                self.tr(
+                    "Pasaporte keeps running in the tray. Use its icon to "
+                    "show the window or quit."
+                ),
+                QSystemTrayIcon.MessageIcon.Information,
+                4000,
+            )
+        self.hide()
+
+    def quit_app(self) -> None:
+        self._close_for_quit()
+
+    def _close_for_quit(self) -> None:
+        self._quitting = True
+        try:
+            self.close()
+        finally:
+            self._quitting = False
 
     # ------------------------------------------------------------- idioma
 
@@ -624,7 +690,19 @@ class MainWindow(QMainWindow):
     def changeEvent(self, event) -> None:
         if event.type() == QEvent.Type.LanguageChange:
             self._retranslate_ui()
+        elif (
+            event.type() == QEvent.Type.WindowStateChange
+            and self.isMinimized()
+            and self._hides_to_tray()
+        ):
+            # Diferido: ocultar dentro de changeEvent interfiere con el
+            # gestor de ventanas que acaba de minimizarla.
+            QTimer.singleShot(0, self._minimize_to_tray_now)
         super().changeEvent(event)
+
+    def _minimize_to_tray_now(self) -> None:
+        if self.isMinimized() and self._hides_to_tray():
+            self._hide_to_tray()
 
     def _retranslate_ui(self) -> None:
         self.setWindowTitle(APP_NAME)
@@ -674,6 +752,8 @@ class MainWindow(QMainWindow):
         self.reload_action.setText(self.tr("Reload configuration"))
         self.open_action.setText(self.tr("Open configuration…"))
         self.quit_action.setText(self.tr("Quit"))
+        self.minimize_tray_action.setText(self.tr("Minimize to tray"))
+        self._refresh_tray_action()
         self.about_action.setText(self.tr("About…"))
         self.language_menu.setTitle(self.tr("Language"))
         if "auto" in self.language_actions:
@@ -1601,7 +1681,7 @@ class MainWindow(QMainWindow):
             )
         if self._quit_after_stop:
             self._quit_after_stop = False
-            self.close()
+            self._close_for_quit()
 
     # ---------------------------------------------------------------- log
 
@@ -1717,6 +1797,11 @@ class MainWindow(QMainWindow):
         self.settings.setValue("geometry", self.saveGeometry())
 
     def closeEvent(self, event) -> None:
+        if self._hides_to_tray():
+            event.ignore()
+            self._hide_to_tray()
+            return
+
         if self._update_thread is not None and self._update_thread.isRunning():
             # Timeout corto de la petición HTTP: esperar es casi inmediato.
             self._update_thread.wait(11000)
