@@ -2,6 +2,10 @@
 
 [English](./README.md) · **Español**
 
+[![CI](https://github.com/jsnoriegam/Pasaporte/actions/workflows/appimage.yml/badge.svg)](https://github.com/jsnoriegam/Pasaporte/actions/workflows/appimage.yml)
+[![Release](https://img.shields.io/github/v/release/jsnoriegam/Pasaporte?include_prereleases&label=release)](https://github.com/jsnoriegam/Pasaporte/releases)
+[![License](https://img.shields.io/github/license/jsnoriegam/Pasaporte)](./LICENSE)
+
 [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-jsnoriegam-FFDD00?logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/jsnoriegam)
 
 Interfaz gráfica en **Python + PySide6/Qt** para `openconnect`, con soporte
@@ -167,9 +171,7 @@ OPENCONNECT_BIN=/opt/openconnect/bin/openconnect ./Pasaporte-*.AppImage
   AppImage con Docker en cada push a `main` (descargable como artifact) y lo
   publica en un release cuando se empuja un tag `v*`.
 
-> La metadata del AppImage (`packaging/io.github.jsnoriegam.pasaporte.appdata.xml`)
-> declara `GPL-3.0-or-later`. El repositorio todavía no incluye un archivo
-> `LICENSE`; añádelo antes de distribuir binarios.
+
 
 ## Gestión de conexiones
 
@@ -490,6 +492,20 @@ El flujo SAML se validó con un ACS simulado que devuelve las cabeceras
 `vpn3.utb.edu.co` (redirección a Microsoft Entra ID). Contra un servidor
 GlobalProtect real puede requerir ajustar `gateway`, `clientos`, `os` o
 `usergroup`.
+
+## Licencia
+
+Pasaporte es software libre bajo la
+[GNU General Public License v3.0 o posterior](./LICENSE).
+
+## Historial de cambios
+
+El historial de versiones está en [CHANGELOG.md](./CHANGELOG.md).
+
+## Contribuir
+
+Los errores y propuestas se abren desde las
+[plantillas de issues](https://github.com/jsnoriegam/Pasaporte/issues/new/choose).
 
 ## Apoya el proyecto
 

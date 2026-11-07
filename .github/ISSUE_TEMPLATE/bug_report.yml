@@ -1,0 +1,75 @@
+name: Informe de error
+description: Algo no funciona como esperas
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Antes de abrir un issue, revisa la sección *Solución de problemas* del README.
+        No incluyas contraseñas, cookies SAML ni el contenido de tu `hosts.json` sin
+        cambiar el host y el usuario.
+
+  - type: input
+    id: version
+    attributes:
+      label: Versión de Pasaporte
+      description: Salida de `pasaporte --version` o la versión del AppImage.
+      placeholder: "0.1.0-beta.1"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: packaging
+    attributes:
+      label: Cómo lo ejecutas
+      options:
+        - AppImage
+        - Desde el código fuente (.venv)
+        - Otro
+    validations:
+      required: true
+
+  - type: input
+    id: distro
+    attributes:
+      label: Distribución y escritorio
+      description: Por ejemplo, Fedora 42 con GNOME 48 en Wayland.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: protocol
+    attributes:
+      label: Protocolo de la conexión
+      options:
+        - Fortinet
+        - GlobalProtect (usuario y contraseña)
+        - GlobalProtect (SAML)
+        - Otro
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Pasos para reproducirlo
+      placeholder: |
+        1. Abrir Pasaporte
+        2. Seleccionar la conexión…
+        3. Pulsar Conectar…
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Comportamiento esperado y observado
+    validations:
+      required: true
+
+  - type: textarea
+    id: log
+    attributes:
+      label: Registro de la aplicación
+      description: Copia el panel *Registro* (oculta la IP y el host si lo prefieres).
+      render: text
