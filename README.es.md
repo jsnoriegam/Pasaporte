@@ -516,7 +516,7 @@ Probado con:
 - PySide6 6.11.2 (Qt 6.11) y PySide6 6.12.0 (Qt 6.12)
 - openconnect 9.21
 - Linux (Wayland/X11)
-- 98 tests automáticos (configuración, CRUD, cancelaciones, migración, SAML, ciclo conectar/desconectar, cierre de ventana, i18n y `OPENCONNECT_BIN`)
+- 102 tests automáticos (configuración, CRUD, cancelaciones, migración, SAML, ciclo conectar/desconectar, cierre de ventana, i18n y `OPENCONNECT_BIN`)
 - Empaquetado AppImage con Podman/Docker (PyInstaller + appimagetool)
 
 El flujo SAML se validó con un ACS simulado que devuelve las cabeceras

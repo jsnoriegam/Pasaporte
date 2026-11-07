@@ -121,7 +121,7 @@ class ConnectionDialog(QDialog):
         )
 
         self.name_edit = QLineEdit(tab)
-        self.name_edit.setPlaceholderText("Work VPN")
+        self.name_edit.setPlaceholderText(self.tr("Work VPN"))
         form.addRow(self.tr("Name"), self.name_edit)
 
         self.host_edit = QLineEdit(tab)

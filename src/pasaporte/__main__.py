@@ -52,6 +52,7 @@ from .constants import (  # noqa: E402
     APP_VERSION,
 )
 from .paths import resolve_config_path  # noqa: E402
+from .single_instance import SingleInstance  # noqa: E402
 from .ui import MainWindow  # noqa: E402
 
 
@@ -114,8 +115,20 @@ def main(argv: list[str] | None = None) -> int:
 
     app.setProperty("pasaporte_devtools_port", DEVTOOLS_PORT)
 
+    if args.start_hidden:
+        message = "background"
+    elif args.connect:
+        message = f"connect:{args.connect}"
+    else:
+        message = "show"
+    single = SingleInstance(APP_ID, app)
+    if single.forward(message):
+        return 0
+    single.listen()
+
     config_target = resolve_config_path(args.config)
     window = MainWindow(config_target)
+    single.received.connect(window.handle_external_request)
     # Sin bandeja no hay forma de volver a la ventana: en ese caso se muestra.
     if not (args.start_hidden and window.tray is not None):
         window.show()

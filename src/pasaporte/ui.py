@@ -641,6 +641,16 @@ class MainWindow(QMainWindow):
         tray.show()
         self.tray = tray
 
+    def handle_external_request(self, message: str) -> None:
+        """Órdenes de una segunda ejecución de Pasaporte."""
+        if message == "background":
+            return
+        self.showNormal()
+        self.raise_()
+        self.activateWindow()
+        if message.startswith("connect:"):
+            self.connect_by_name(message[len("connect:"):])
+
     def _on_tray_activated(self, reason) -> None:
         if reason == QSystemTrayIcon.Trigger:
             self.showNormal()

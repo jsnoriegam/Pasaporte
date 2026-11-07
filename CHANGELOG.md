@@ -28,6 +28,9 @@ y el proyecto usa [SemVer](https://semver.org/lang/es/).
   arranca Pasaporte oculto en la bandeja (`--start-hidden`).
 - Bandeja: *Conectar* indica la conexión seleccionada y *Conectar a…* lista
   todas. Con la ventana oculta, los avisos llegan como notificación.
+- Una sola instancia: al ejecutar Pasaporte con otra ya abierta, la segunda
+  muestra la ventana de la primera (o conecta la conexión pedida con
+  `--connect`) y termina.
 - El runner distingue una desconexión pedida por el usuario de una caída
   (`stop_requested`).
 
