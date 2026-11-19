@@ -7,6 +7,15 @@ y el proyecto usa [SemVer](https://semver.org/lang/es/).
 
 ## [Sin publicar]
 
+## [0.1.0-beta.5] - 2026-11-19
+
+### Corregido
+
+- Cierre silencioso con el AppImage en Python 3.10/3.11: PySide6 6.12.0
+  abortaba con `Fatal Python error: none_dealloc: deallocating None`.
+  `requirements.txt` fija PySide6 <6.12 en esas versiones y la build comprueba
+  la versión instalada.
+
 ## [0.1.0-beta.4] - 2026-11-18
 
 ### Añadido
@@ -83,7 +92,8 @@ Primera beta pública.
 - CI en GitHub Actions: tests en cada push, AppImage como artifact y release
   automático al empujar un tag `v*`.
 
-[Sin publicar]: https://github.com/jsnoriegam/Pasaporte/compare/v0.1.0-beta.4...HEAD
+[Sin publicar]: https://github.com/jsnoriegam/Pasaporte/compare/v0.1.0-beta.5...HEAD
+[0.1.0-beta.5]: https://github.com/jsnoriegam/Pasaporte/compare/v0.1.0-beta.4...v0.1.0-beta.5
 [0.1.0-beta.4]: https://github.com/jsnoriegam/Pasaporte/compare/v0.1.0-beta.3...v0.1.0-beta.4
 [0.1.0-beta.3]: https://github.com/jsnoriegam/Pasaporte/compare/v0.1.0-beta.2...v0.1.0-beta.3
 [0.1.0-beta.2]: https://github.com/jsnoriegam/Pasaporte/compare/v0.1.0-beta.1...v0.1.0-beta.2

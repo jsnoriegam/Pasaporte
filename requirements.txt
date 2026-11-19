@@ -1,1 +1,5 @@
-PySide6>=6.6,<7
+# PySide6 6.12.0 has a known singleton-refcount crash on Python <3.12
+# (PYSIDE-3424 / PYSIDE-3474), which aborts with "none_dealloc".
+# The AppImage builds with Python 3.10 on Ubuntu 22.04, so keep it on 6.11.x.
+PySide6>=6.6,<6.12; python_version < "3.12"
+PySide6>=6.6,<7; python_version >= "3.12"

@@ -32,6 +32,11 @@ domains use the VPN resolver.
 - PySide6 with the `QtWebEngineWidgets` and `QtWebSockets` modules.
   The `PySide6` package from PyPI includes them.
 
+> On Python 3.10/3.11, `requirements.txt` pins PySide6 below 6.12: PySide6
+> 6.12.0 has a known refcount bug that aborts with
+> `Fatal Python error: none_dealloc: deallocating None` after running for a
+> while. The AppImage already uses the pinned version.
+
 Quick checks:
 
 ```bash
@@ -189,7 +194,7 @@ CONTAINER_ENGINE=docker ./packaging/build-in-podman.sh
 The result is written to:
 
 ```
-dist/Pasaporte-0.1.0-beta.4-x86_64.AppImage
+dist/Pasaporte-0.1.0-beta.5-x86_64.AppImage
 ```
 
 The build uses Ubuntu 22.04 inside the container to keep glibc compatibility.
@@ -546,10 +551,10 @@ connect/disconnect cycle, SAML, `usergroup`, i18n and openconnect detection
 
 Tested with:
 
-- PySide6 6.11.2 (Qt 6.11) and PySide6 6.12.0 (Qt 6.12)
+- PySide6 6.11.3 (Qt 6.11, AppImage) and PySide6 6.12.0 on Python 3.12+
 - openconnect 9.21
 - Linux (Wayland/X11)
-- 123 automated tests (configuration, CRUD, cancellations, migration, SAML,
+- 124 automated tests (configuration, CRUD, cancellations, migration, SAML,
   connect/disconnect cycle, window close, i18n and `OPENCONNECT_BIN`)
 - AppImage packaging with Podman/Docker (PyInstaller + appimagetool)
 

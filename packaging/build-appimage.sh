@@ -14,6 +14,20 @@ python3 -m venv "$VENV"
 "$VENV/bin/pip" install --upgrade pip
 "$VENV/bin/pip" install -r requirements.txt pyinstaller
 
+# PySide6 6.12.0 corrompe los refcounts en Python <3.12 y aborta con
+# "none_dealloc". El contenedor usa Python 3.10: exige la rama 6.11.x.
+"$VENV/bin/python" - <<'PY'
+import sys
+import PySide6
+
+if sys.version_info < (3, 12) and PySide6.__version__.startswith("6.12."):
+    raise SystemExit(
+        f"PySide6 {PySide6.__version__} is broken on Python "
+        f"{sys.version.split()[0]}; pin PySide6<6.12."
+    )
+print(f"PySide6 {PySide6.__version__} on Python {sys.version.split()[0]}")
+PY
+
 VERSION="$("$VENV/bin/python" - <<'PY'
 import sys
 sys.path.insert(0, "src")

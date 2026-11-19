@@ -33,6 +33,11 @@ VPN.
 - PySide6 con los módulos `QtWebEngineWidgets` y `QtWebSockets`.
   El paquete `PySide6` de PyPI los incluye.
 
+> En Python 3.10/3.11, `requirements.txt` fija PySide6 por debajo de 6.12:
+> PySide6 6.12.0 tiene un fallo de refcount que aborta con
+> `Fatal Python error: none_dealloc: deallocating None` tras un rato de
+> ejecución. El AppImage ya usa la versión fijada.
+
 Comprobaciones rápidas:
 
 ```bash
@@ -189,7 +194,7 @@ CONTAINER_ENGINE=docker ./packaging/build-in-podman.sh
 El resultado queda en:
 
 ```
-dist/Pasaporte-0.1.0-beta.4-x86_64.AppImage
+dist/Pasaporte-0.1.0-beta.5-x86_64.AppImage
 ```
 
 La build usa Ubuntu 22.04 dentro del contenedor para mantener compatibilidad
@@ -550,10 +555,10 @@ openconnect (`OPENCONNECT_BIN`).
 
 Probado con:
 
-- PySide6 6.11.2 (Qt 6.11) y PySide6 6.12.0 (Qt 6.12)
+- PySide6 6.11.3 (Qt 6.11, AppImage) y PySide6 6.12.0 en Python 3.12+
 - openconnect 9.21
 - Linux (Wayland/X11)
-- 123 tests automáticos (configuración, CRUD, cancelaciones, migración, SAML, ciclo conectar/desconectar, cierre de ventana, i18n y `OPENCONNECT_BIN`)
+- 124 tests automáticos (configuración, CRUD, cancelaciones, migración, SAML, ciclo conectar/desconectar, cierre de ventana, i18n y `OPENCONNECT_BIN`)
 - Empaquetado AppImage con Podman/Docker (PyInstaller + appimagetool)
 
 El flujo SAML se validó con un ACS simulado que devuelve las cabeceras

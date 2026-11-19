@@ -30,6 +30,17 @@ class VersionTests(unittest.TestCase):
         self.assertTrue(releases, "appdata must declare a release")
         self.assertEqual(releases[0].get("version"), APP_VERSION)
 
+    def test_pyside_612_is_excluded_on_old_python(self) -> None:
+        # PySide6 6.12.0 aborta con none_dealloc en Python <3.12.
+        text = (ROOT / "requirements.txt").read_text(encoding="utf-8")
+        lines = [
+            line for line in text.splitlines()
+            if line.startswith("PySide6") and "python_version <" in line
+        ]
+        self.assertTrue(lines)
+        self.assertIn("<6.12", lines[0])
+        self.assertIn('python_version < "3.12"', lines[0])
+
 
 if __name__ == "__main__":
     unittest.main()

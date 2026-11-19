@@ -44,6 +44,7 @@
     <category>Network</category>
   </categories>
   <releases>
+    <release version="0.1.0-beta.5" date="2026-11-19"/>
     <release version="0.1.0-beta.4" date="2026-11-18"/>
     <release version="0.1.0-beta.3" date="2026-11-07"/>
     <release version="0.1.0-beta.2" date="2026-11-06"/>
