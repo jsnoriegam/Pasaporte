@@ -7,11 +7,22 @@ y el proyecto usa [SemVer](https://semver.org/lang/es/).
 
 ## [Sin publicar]
 
+## [0.1.0-beta.4] - 2026-11-18
+
 ### Añadido
 
 - Split DNS por conexión: campo *Dominios de split DNS* en Avanzado. Pasaporte
   genera un envoltorio de `vpnc-script` para que esos dominios se resuelvan
   con el DNS de la VPN. Requiere `systemd-resolved` y `vpnc-script`.
+- Banner de social preview y archivo de entrada para AppImage Hub en
+  `packaging/`.
+
+### Cambiado
+
+- README, metadatos AppStream y ejemplos con términos de búsqueda y datos
+  genéricos.
+- Las rutas que muestra la app usan `~` para la carpeta personal.
+- Capturas regeneradas con la configuración de ejemplo.
 
 ## [0.1.0-beta.3] - 2026-11-07
 
@@ -72,7 +83,8 @@ Primera beta pública.
 - CI en GitHub Actions: tests en cada push, AppImage como artifact y release
   automático al empujar un tag `v*`.
 
-[Sin publicar]: https://github.com/jsnoriegam/Pasaporte/compare/v0.1.0-beta.3...HEAD
+[Sin publicar]: https://github.com/jsnoriegam/Pasaporte/compare/v0.1.0-beta.4...HEAD
+[0.1.0-beta.4]: https://github.com/jsnoriegam/Pasaporte/compare/v0.1.0-beta.3...v0.1.0-beta.4
 [0.1.0-beta.3]: https://github.com/jsnoriegam/Pasaporte/compare/v0.1.0-beta.2...v0.1.0-beta.3
 [0.1.0-beta.2]: https://github.com/jsnoriegam/Pasaporte/compare/v0.1.0-beta.1...v0.1.0-beta.2
 [0.1.0-beta.1]: https://github.com/jsnoriegam/Pasaporte/releases/tag/v0.1.0-beta.1
