@@ -17,7 +17,9 @@ embebido).
 Es un cliente VPN de escritorio para Linux para Fortinet, Palo Alto
 GlobalProtect (incluido inicio de sesión único SAML), Cisco AnyConnect,
 Pulse Secure, F5 y Juniper, todo a través de openconnect. La misma lista
-JSON de conexiones sirve para todos los protocolos.
+JSON de conexiones sirve para todos los protocolos, y cada conexión puede
+activar **split DNS** para que los dominios internos usen el resolutor de la
+VPN.
 
 ![Captura de Pasaporte](./screenshot.png)
 
@@ -27,6 +29,7 @@ JSON de conexiones sirve para todos los protocolos.
 - Python 3.10 o superior.
 - `openconnect` instalado y en el `PATH` (o define `OPENCONNECT_BIN` con su ruta).
 - `pkexec` (recomendado) o `sudo`.
+- `systemd-resolved` (`resolvectl`) solo si usas split DNS.
 - PySide6 con los módulos `QtWebEngineWidgets` y `QtWebSockets`.
   El paquete `PySide6` de PyPI los incluye.
 
@@ -123,6 +126,34 @@ la ventana oculta, cuando una conexión se cae y cuando hay un error.
   arranca entonces oculto en la bandeja (`--start-hidden`). Con el AppImage, la
   entrada apunta a la ruta actual del AppImage: si mueves el archivo, desactiva
   la opción y vuelve a activarla.
+
+### Split DNS
+
+Algunas redes corporativas publican direcciones internas solo en el DNS de la
+VPN. En **Avanzado → Dominios de split DNS**, escribe los dominios que deben
+usar el resolutor de la VPN, separados por comas (por ejemplo
+`corp.example.com, intranet.example.com`). El resto de nombres siguen usando
+el DNS del sistema.
+
+Pasaporte genera un pequeño envoltorio de `vpnc-script` para esa conexión y lo
+pasa a openconnect con `--script`. El envoltorio añade los dominios al enlace
+de la VPN y conserva las rutas y el DNS que configura el script estándar.
+Requiere `systemd-resolved` (`resolvectl`) y `vpnc-script`; openconnect lo
+ejecuta como root, igual que el script estándar.
+
+Los dominios se guardan en `hosts.json`:
+
+```json
+"dns_domains": ["corp.example.com", "intranet.example.com"]
+```
+
+Usa el sufijo más específico que necesites: un dominio padre como
+`corp.example.com` envía todos sus subdominios al DNS de la VPN.
+
+El split DNS no se puede combinar con un `--script` propio en `extra_args`.
+
+Si tu navegador usa DNS over HTTPS, puede saltarse `systemd-resolved`;
+desactívalo para estos dominios o usa el resolutor del sistema.
 
 ### Acceso desde el menú de aplicaciones
 
@@ -222,7 +253,8 @@ El diálogo de edición tiene tres pestañas:
 - **GlobalProtect / SAML**: `saml`, `gateway`, `--os`, `clientos`,
   `usergroup`, User-Agent y `ignore_redirects`.
 - **Avanzado**: elevación (`pkexec`/`sudo`), `no_verify`,
-  `allow_insecure_crypto` y argumentos extra (uno por línea).
+  `allow_insecure_crypto`, dominios de split DNS y argumentos extra (uno por
+  línea).
 
 Las escrituras son atómicas, con permisos `0600` y un backup
 `hosts.json.bak` antes de cada cambio. Si el JSON se modifica fuera de la
@@ -289,6 +321,7 @@ escrituras son atómicas, con backup y permisos `0600`.
 | `allow_insecure_crypto` | no | Añade `--allow-insecure-crypto` a openconnect. |
 | `privilege` | no | `pkexec` o `sudo` para esta conexión. |
 | `extra_args` | no | Lista de argumentos extra para openconnect. |
+| `dns_domains` | no | Dominios que se resuelven con el DNS de la VPN (split DNS). Requiere `systemd-resolved`. |
 | `description` | no | Texto libre que se muestra bajo el nombre. |
 
 > `--os` y `clientos` no son lo mismo: `clientos` se envía al portal en el
@@ -520,7 +553,7 @@ Probado con:
 - PySide6 6.11.2 (Qt 6.11) y PySide6 6.12.0 (Qt 6.12)
 - openconnect 9.21
 - Linux (Wayland/X11)
-- 103 tests automáticos (configuración, CRUD, cancelaciones, migración, SAML, ciclo conectar/desconectar, cierre de ventana, i18n y `OPENCONNECT_BIN`)
+- 123 tests automáticos (configuración, CRUD, cancelaciones, migración, SAML, ciclo conectar/desconectar, cierre de ventana, i18n y `OPENCONNECT_BIN`)
 - Empaquetado AppImage con Podman/Docker (PyInstaller + appimagetool)
 
 El flujo SAML se validó con un ACS simulado que devuelve las cabeceras

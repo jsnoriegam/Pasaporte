@@ -10,6 +10,7 @@ from PySide6.QtCore import QCoreApplication
 
 from .config import VPNServer
 from .gp import SamlResult
+from .split_dns import has_custom_script, normalize_domains, write_wrapper
 
 DEFAULT_GP_USER_AGENT = "PAN GlobalProtect"
 
@@ -159,6 +160,17 @@ def build_connection(
 
     if secret is not None:
         args.append("--passwd-on-stdin")
+
+    domains = normalize_domains(server.dns_domains)
+    if domains:
+        if has_custom_script(server.extra_args):
+            raise ValueError(
+                QCoreApplication.translate(
+                    "OpenConnect",
+                    "Use split DNS domains or a custom --script, not both.",
+                )
+            )
+        args.append("--script=" + str(write_wrapper(domains)))
 
     args.extend(server.extra_args)
     args.append(host)

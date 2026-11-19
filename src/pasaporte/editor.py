@@ -25,6 +25,7 @@ from .config import (
     find_duplicate,
     validate_server,
 )
+from .split_dns import normalize_domains
 
 PROTOCOL_LABELS = [
     ("Fortinet", "fortinet"),
@@ -274,6 +275,24 @@ class ConnectionDialog(QDialog):
         )
         form.addRow("", self.allow_insecure_crypto_check)
 
+        self.dns_domains_edit = QLineEdit(tab)
+        self.dns_domains_edit.setPlaceholderText(
+            self.tr("corp.example.com, intranet.example.com")
+        )
+        form.addRow(self.tr("Split DNS domains"), self.dns_domains_edit)
+
+        dns_hint = QLabel(
+            self.tr(
+                "Only these domains use the VPN DNS. Separate them with "
+                "commas. Requires systemd-resolved; openconnect runs the "
+                "generated wrapper as root, like vpnc-script."
+            ),
+            tab,
+        )
+        dns_hint.setWordWrap(True)
+        dns_hint.setStyleSheet("color: palette(mid);")
+        form.addRow("", dns_hint)
+
         self.extra_args_edit = QPlainTextEdit(tab)
         self.extra_args_edit.setPlaceholderText(
             self.tr("--csd-wrapper=/path/hip.sh\n--no-dtls")
@@ -335,6 +354,9 @@ class ConnectionDialog(QDialog):
         )
         self.extra_args_edit.setPlainText(
             "\n".join(server.extra_args)
+        )
+        self.dns_domains_edit.setText(
+            ", ".join(server.dns_domains or [])
         )
 
         for index in range(self.privilege_combo.count()):
@@ -509,6 +531,9 @@ class ConnectionDialog(QDialog):
             ),
             privilege=self.privilege_combo.currentData(),
             extra_args=extra_args,
+            dns_domains=normalize_domains(
+                self.dns_domains_edit.text()
+            ),
             description=self.description_edit.text().strip() or None,
         )
 

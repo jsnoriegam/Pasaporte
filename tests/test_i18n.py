@@ -72,6 +72,19 @@ class I18nTests(unittest.TestCase):
             "Add",
         )
 
+    def test_split_dns_translations(self) -> None:
+        self.manager.set_language("es")
+        self.assertEqual(
+            QCoreApplication.translate(
+                "ConnectionDialog", "Split DNS domains"
+            ),
+            "Dominios de split DNS",
+        )
+        self.assertEqual(
+            QCoreApplication.translate("SplitDNS", "Domain is empty."),
+            "El dominio está vacío.",
+        )
+
     def test_main_window_retranslates(self) -> None:
         # Parte siempre del ajuste automático para no depender de lo que
         # hayan dejado otros tests en QSettings.

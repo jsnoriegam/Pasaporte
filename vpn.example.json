@@ -13,6 +13,7 @@
     "saml": true,
     "gateway": false,
     "os": "win",
-    "clientos": "Windows"
+    "clientos": "Windows",
+    "dns_domains": ["corp.example.com"]
   }
 ]

@@ -12,6 +12,12 @@ from typing import Any
 
 from PySide6.QtCore import QCoreApplication
 
+from .split_dns import (
+    has_custom_script,
+    normalize_domains,
+    validate_domains,
+)
+
 KNOWN_PROTOCOLS = {
     "fortinet",
     "gp",
@@ -60,6 +66,20 @@ def _as_str_list(value: Any) -> list[str]:
     )
 
 
+def _as_domains(value: Any) -> list[str]:
+    if value is None:
+        return []
+    if isinstance(value, str):
+        return normalize_domains(value)
+    if isinstance(value, (list, tuple)):
+        return normalize_domains([str(item) for item in value])
+    raise ValueError(
+        QCoreApplication.translate(
+            "Config", "'dns_domains' must be a list of domains."
+        )
+    )
+
+
 @dataclass
 class VPNServer:
     name: str
@@ -85,6 +105,7 @@ class VPNServer:
 
     # Extras
     extra_args: list[str] = field(default_factory=list)
+    dns_domains: list[str] = field(default_factory=list)
     description: str | None = None
 
     @property
@@ -179,6 +200,29 @@ def validate_server(server: VPNServer) -> list[str]:
             )
         )
 
+    if not isinstance(server.dns_domains, list) or any(
+        not isinstance(domain, str) for domain in server.dns_domains
+    ):
+        errors.append(
+            QCoreApplication.translate(
+                "Config", "dns_domains must be a list of domains."
+            )
+        )
+    else:
+        domains = normalize_domains(server.dns_domains)
+        errors.extend(validate_domains(domains))
+        if (
+            domains
+            and isinstance(server.extra_args, list)
+            and has_custom_script(server.extra_args)
+        ):
+            errors.append(
+                QCoreApplication.translate(
+                    "Config",
+                    "Use split DNS domains or a custom --script, not both.",
+                )
+            )
+
     return errors
 
 
@@ -252,6 +296,7 @@ def _parse_server(item: dict[str, Any], number: int) -> VPNServer:
         extra_args=_as_str_list(
             item.get("extra_args") or item.get("extra")
         ),
+        dns_domains=_as_domains(item.get("dns_domains")),
         description=(
             str(item["description"]).strip()
             if item.get("description")
@@ -347,6 +392,12 @@ def apply_server_to_dict(base: dict[str, Any], server: VPNServer) -> dict:
     else:
         data.pop("extra_args", None)
         data.pop("extra", None)
+
+    domains = normalize_domains(server.dns_domains)
+    if domains:
+        data["dns_domains"] = domains
+    else:
+        data.pop("dns_domains", None)
 
     return data
 

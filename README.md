@@ -17,7 +17,8 @@ integrated **GlobalProtect with SAML** support inside the application itself
 It is a Linux desktop VPN client for Fortinet, Palo Alto GlobalProtect
 (including SAML single sign-on), Cisco AnyConnect, Pulse Secure, F5 and
 Juniper, all through openconnect. The same JSON connection list works for
-every protocol.
+every protocol, and each connection can enable **split DNS** so internal
+domains use the VPN resolver.
 
 ![Pasaporte screenshot](./screenshot-en.png)
 
@@ -27,6 +28,7 @@ every protocol.
 - Python 3.10 or newer.
 - `openconnect` installed and on `PATH` (or set `OPENCONNECT_BIN` to its path).
 - `pkexec` (recommended) or `sudo`.
+- `systemd-resolved` (`resolvectl`) only if you use split DNS.
 - PySide6 with the `QtWebEngineWidgets` and `QtWebSockets` modules.
   The `PySide6` package from PyPI includes them.
 
@@ -124,6 +126,33 @@ is hidden, when a connection drops, and when an error occurs.
   starts hidden in the tray (`--start-hidden`). With the AppImage, the entry
   points to the AppImage's current path: turn the option off and on again if
   you move the file.
+
+### Split DNS
+
+Some corporate networks publish internal addresses only through the VPN DNS.
+In **Advanced → Split DNS domains**, enter the domains that must use the VPN
+resolver, separated by commas (for example `corp.example.com,
+intranet.example.com`). The rest of the names keep using the system DNS.
+
+Pasaporte generates a small `vpnc-script` wrapper for that connection and
+passes it to openconnect with `--script`. The wrapper adds the domains to the
+VPN link and keeps the routes and DNS configured by the standard script. It
+requires `systemd-resolved` (`resolvectl`) and `vpnc-script`, and openconnect
+runs it as root, like the standard script.
+
+The domains are stored in `hosts.json`:
+
+```json
+"dns_domains": ["corp.example.com", "intranet.example.com"]
+```
+
+Use the most specific suffix you need: a parent domain such as
+`corp.example.com` sends every subdomain to the VPN DNS.
+
+Split DNS cannot be combined with a custom `--script` in `extra_args`.
+
+If your browser enables DNS over HTTPS, it can bypass `systemd-resolved`;
+disable it for these domains or use the system resolver.
 
 ### Launching from the application menu
 
@@ -223,7 +252,8 @@ The edit dialog has three tabs:
 - **GlobalProtect / SAML**: `saml`, `gateway`, `--os`, `clientos`,
   `usergroup`, User-Agent and `ignore_redirects`.
 - **Advanced**: elevation (`pkexec`/`sudo`), `no_verify`,
-  `allow_insecure_crypto` and extra arguments (one per line).
+  `allow_insecure_crypto`, split DNS domains and extra arguments (one per
+  line).
 
 Writes are atomic, with `0600` permissions and a `hosts.json.bak` backup before
 every change. If the JSON is modified outside the app, you will be asked for
@@ -289,6 +319,7 @@ replacing everything or merging by name. All writes are atomic, with backup and
 | `allow_insecure_crypto` | no | Adds `--allow-insecure-crypto` to openconnect. |
 | `privilege` | no | `pkexec` or `sudo` for this connection. |
 | `extra_args` | no | List of extra arguments for openconnect. |
+| `dns_domains` | no | Domains resolved through the VPN DNS (split DNS). Requires `systemd-resolved`. |
 | `description` | no | Free text shown below the name. |
 
 > `--os` and `clientos` are not the same thing: `clientos` is sent to the
@@ -518,7 +549,7 @@ Tested with:
 - PySide6 6.11.2 (Qt 6.11) and PySide6 6.12.0 (Qt 6.12)
 - openconnect 9.21
 - Linux (Wayland/X11)
-- 103 automated tests (configuration, CRUD, cancellations, migration, SAML,
+- 123 automated tests (configuration, CRUD, cancellations, migration, SAML,
   connect/disconnect cycle, window close, i18n and `OPENCONNECT_BIN`)
 - AppImage packaging with Podman/Docker (PyInstaller + appimagetool)
 

@@ -7,6 +7,12 @@ y el proyecto usa [SemVer](https://semver.org/lang/es/).
 
 ## [Sin publicar]
 
+### Añadido
+
+- Split DNS por conexión: campo *Dominios de split DNS* en Avanzado. Pasaporte
+  genera un envoltorio de `vpnc-script` para que esos dominios se resuelvan
+  con el DNS de la VPN. Requiere `systemd-resolved` y `vpnc-script`.
+
 ## [0.1.0-beta.3] - 2026-11-07
 
 ### Añadido
